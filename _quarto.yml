@@ -34,8 +34,7 @@ book:
   title: "Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control"
   author: "Pol del Castillo"
   date: today
-  # Uncomment once GitHub Pages is set up (see GETTING-STARTED.md):
-  # site-url: "https://TODO-username.github.io/TODO-repo/"
+  site-url: "https://pd05849.github.io/MS-Thesis/"
   sidebar:
     style: docked
     search: true
