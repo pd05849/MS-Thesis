@@ -31,8 +31,8 @@ project:
   output-dir: _site
 
 book:
-  title: "TODO: Thesis Title"
-  author: "TODO: Author Name"
+  title: "Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control"
+  author: "Pol del Castillo"
   date: today
   # Uncomment once GitHub Pages is set up (see GETTING-STARTED.md):
   # site-url: "https://TODO-username.github.io/TODO-repo/"

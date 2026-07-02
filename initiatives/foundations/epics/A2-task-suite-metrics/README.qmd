@@ -1,0 +1,37 @@
+---
+title: Task suite & evaluation metrics
+epic-id: A2-task-suite-metrics
+initiative: foundations
+gantt-id: A2
+gantt-dates:
+- '2026-08-01'
+- '2026-09-01'
+status: open
+owner: Pol del Castillo
+customer: The policy-learning initiative — every training run and evaluation is scored against the contract fixed here.
+need: The notion of complex tasks is too vague to evaluate; the thesis needs a concrete task suite on OARbot with unambiguous success criteria before any data is collected.
+benefit: A frozen evaluation contract — task list, success criteria, metrics (success rate, generalization splits, data efficiency) — so results from C1–C3 are comparable and defensible.
+thesis-chapters: []
+related-epics: [A1-literature-review, B2-demonstration-dataset, C3-complex-task-evaluation]
+---
+
+## Background
+
+Defines what "complex tasks" means for this thesis: the concrete task
+suite OARbot must perform (long-horizon, multi-step, language-
+conditioned), per-task success criteria, and the metrics reported in
+the final evaluation — success rate, generalization to unseen object /
+scene / instruction variations, and data efficiency. Informed by the
+benchmarks found in [A1](../A1-literature-review/README.qmd); consumed
+by dataset collection (B2) and the final evaluation (C3).
+
+## Status log
+
+<!-- Dated bullets, newest first, each linking its weekly update:
+- **W<N> (YYYY-MM-DD):** what moved this week.
+  → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
+     Done epics add a `## Resolution` section above the listing. -->
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

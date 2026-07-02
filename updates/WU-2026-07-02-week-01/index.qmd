@@ -1,7 +1,7 @@
 ---
-title: "Week 1 — template walkthrough"
-date: 2026-06-12
-owner: TODO Owner
+title: "Week 1 — kickoff: repo, schedule, and thesis scope"
+date: 2026-07-02
+owner: Pol del Castillo
 description: "TODO: one-line summary for the listing card"
 format:
   html:

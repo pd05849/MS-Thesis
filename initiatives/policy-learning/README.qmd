@@ -1,0 +1,25 @@
+---
+title: "Policy learning — GR00T and HF VLA fine-tuning + evaluation"
+initiative-id: policy-learning
+gantt-section: "C"
+status: open
+owner: Pol del Castillo
+description: >
+  Fine-tune NVIDIA GR00T and Hugging Face VLA baselines (SmolVLA, π0)
+  on the OARbot demonstration dataset and evaluate them on the
+  complex-task suite.
+---
+
+This track is the experimental core of the thesis. It fine-tunes NVIDIA
+GR00T on the OARbot demonstration dataset, trains Hugging Face VLA
+baselines (SmolVLA, π0 via LeRobot) on the same data, and runs the
+head-to-head evaluation on the complex-task suite — success rate,
+generalization to unseen task variations, and data efficiency. Its
+results populate the Methods chapter and drive the thesis's central
+claims about learning from demonstration for complex tasks.
+
+## Epics
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

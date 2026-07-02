@@ -1,0 +1,39 @@
+---
+title: 'Literature review: LfD, VLM/VLA, GR00T'
+epic-id: A1-literature-review
+initiative: foundations
+gantt-id: A1
+gantt-dates:
+- '2026-07-01'
+- '2026-08-15'
+status: in-progress
+owner: Pol del Castillo
+customer: The thesis author and advisor — everyone downstream inherits the framing chosen here.
+need: LfD and VLA research is moving fast (GR00T, SmolVLA, π0, OpenVLA); without a structured survey the thesis risks reinventing baselines or missing the state of the art.
+benefit: A Background chapter draft plus a shortlist of models, datasets, and techniques that the platform and policy-learning epics commit to.
+thesis-chapters: []
+related-epics: [A2-task-suite-metrics, C1-groot-finetuning, C2-hf-vla-baselines]
+---
+
+## Background
+
+This epic grounds the thesis. It surveys three bodies of work: (1)
+learning from demonstration for complex, long-horizon manipulation —
+behavior cloning, action chunking, diffusion/flow policies; (2)
+vision-language-action models — NVIDIA GR00T, and the Hugging Face
+ecosystem (SmolVLA, π0, OpenVLA, LeRobot tooling); (3) assistive-robot
+control relevant to OARbot. Output is an annotated bibliography in
+`references.bib` and a Background chapter skeleton, plus the model
+shortlist that [A2](../A2-task-suite-metrics/README.qmd) and the
+policy-learning epics build on.
+
+## Status log
+
+<!-- Dated bullets, newest first, each linking its weekly update:
+- **W<N> (YYYY-MM-DD):** what moved this week.
+  → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
+     Done epics add a `## Resolution` section above the listing. -->
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

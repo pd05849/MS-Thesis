@@ -1,13 +1,13 @@
 ---
-title: Example experiment — what does a worked item look like?
+title: Which VLA backbones fit OARbot and the available compute?
 item-id: A1-EX-001
 type: experiment
-epic-id: A1-example-epic
-initiative: example-research
+epic-id: A1-literature-review
+initiative: foundations
 gantt-id: A1
 status: open
-owner: TODO Owner
-date: '2026-06-12'
+owner: Pol del Castillo
+date: '2026-07-02'
 description: TODO — one-liner used in listing tables and the WU roll-up
 related-items: []
 categories: []

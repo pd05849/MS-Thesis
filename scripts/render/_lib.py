@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 # Owner used by `audit_items.py --fix` and `new_item.py` when none is given.
 # Personalize this once per clone (see GETTING-STARTED.md).
-DEFAULT_OWNER = "TODO Owner"
+DEFAULT_OWNER = "Pol del Castillo"
 
 FRONT_MATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
 

@@ -1,0 +1,27 @@
+---
+title: "Foundations — LfD, VLM/VLA, and the task suite"
+initiative-id: foundations
+gantt-section: "A"
+status: in-progress
+owner: Pol del Castillo
+description: >
+  Ground the thesis: survey learning-from-demonstration and
+  vision-language-action models (NVIDIA GR00T, Hugging Face VLAs), and
+  define the complex-task suite and evaluation metrics for OARbot.
+---
+
+This track builds the intellectual foundation of the thesis. It surveys
+learning from demonstration for complex, long-horizon tasks and the
+current generation of vision-language-action models — NVIDIA GR00T and
+the Hugging Face ecosystem (SmolVLA, π0, LeRobot) — and distills them
+into a concrete problem statement: which complex tasks OARbot must
+perform, what counts as success, and which baselines the learned
+policies are compared against. Its outputs feed the Background chapter
+directly and fix the evaluation contract that the Platform & Data and
+Policy Learning initiatives build toward.
+
+## Epics
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

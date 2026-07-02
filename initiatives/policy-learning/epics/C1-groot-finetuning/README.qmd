@@ -1,0 +1,38 @@
+---
+title: GR00T fine-tuning on OARbot
+epic-id: C1-groot-finetuning
+initiative: policy-learning
+gantt-id: C1
+gantt-dates:
+- '2026-10-01'
+- '2026-12-15'
+status: open
+owner: Pol del Castillo
+customer: The thesis's central research question — can a generalist foundation model be adapted to OARbot with modest demonstration data?
+need: GR00T ships pretrained on heterogeneous robot data but must be adapted to OARbot's embodiment (observation/action spaces) and the thesis task suite.
+benefit: A fine-tuned GR00T policy running on OARbot, with a documented adaptation recipe (embodiment head config, data mix, training budget) and per-task results.
+thesis-chapters: []
+related-epics: [B2-demonstration-dataset, C2-hf-vla-baselines, C3-complex-task-evaluation]
+---
+
+## Background
+
+Adapts NVIDIA GR00T to OARbot: map the robot's observation and action
+spaces into GR00T's embodiment interface, fine-tune on the
+[B2](../../../platform-data/epics/B2-demonstration-dataset/README.qmd)
+dataset, and iterate on the data mix and training budget until the
+policy performs on the real robot. Each training run is recorded as an
+experiment under this epic with its dataset version, config, and
+rollout videos. Compared head-to-head against the HF baselines in C2
+during the C3 evaluation.
+
+## Status log
+
+<!-- Dated bullets, newest first, each linking its weekly update:
+- **W<N> (YYYY-MM-DD):** what moved this week.
+  → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
+     Done epics add a `## Resolution` section above the listing. -->
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

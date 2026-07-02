@@ -1,0 +1,38 @@
+---
+title: HF VLA baselines (SmolVLA / pi0)
+epic-id: C2-hf-vla-baselines
+initiative: policy-learning
+gantt-id: C2
+gantt-dates:
+- '2026-11-01'
+- '2027-01-15'
+status: open
+owner: Pol del Castillo
+customer: The C3 evaluation — a GR00T result means nothing without credible baselines trained on identical data.
+need: The thesis must situate GR00T against the open Hugging Face VLA ecosystem; baselines must be trained on the same dataset and splits to be a fair comparison.
+benefit: SmolVLA and π0 policies trained on the B2 dataset under the same protocol, giving C3 a like-for-like comparison across model scale and architecture.
+thesis-chapters: []
+related-epics: [C1-groot-finetuning, C3-complex-task-evaluation, B2-demonstration-dataset]
+---
+
+## Background
+
+Trains the Hugging Face VLA baselines — SmolVLA and π0 via LeRobot —
+on the same B2 dataset and splits as
+[C1](../C1-groot-finetuning/README.qmd). Keeping the data, splits, and
+evaluation protocol identical isolates the model variable, so the C3
+comparison speaks to architecture and pretraining scale rather than
+data differences. Also the fallback path: if GR00T's embodiment
+adaptation stalls, SmolVLA's lighter footprint keeps the thesis's
+experimental core viable.
+
+## Status log
+
+<!-- Dated bullets, newest first, each linking its weekly update:
+- **W<N> (YYYY-MM-DD):** what moved this week.
+  → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
+     Done epics add a `## Resolution` section above the listing. -->
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

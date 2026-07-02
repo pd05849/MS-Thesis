@@ -1,0 +1,25 @@
+---
+title: "Platform & data — OARbot bring-up and demonstrations"
+initiative-id: platform-data
+gantt-section: "B"
+status: open
+owner: Pol del Castillo
+description: >
+  Bring up the OARbot platform with a teleoperation interface and
+  collect the demonstration dataset (LeRobot format) that the policy
+  learning initiative trains on.
+---
+
+This track turns OARbot into a data-collection instrument. It covers
+hardware/software bring-up of the robot, a teleoperation interface for
+human demonstrations, camera and proprioception streams, and the
+recording pipeline that lands demonstrations in LeRobot dataset format.
+The deliverable is a curated demonstration dataset for the complex-task
+suite defined in the Foundations initiative — the raw material every
+policy in the Policy Learning initiative is trained from.
+
+## Epics
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

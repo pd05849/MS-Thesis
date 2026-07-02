@@ -1,0 +1,37 @@
+---
+title: Demonstration dataset collection
+epic-id: B2-demonstration-dataset
+initiative: platform-data
+gantt-id: B2
+gantt-dates:
+- '2026-09-01'
+- '2026-11-15'
+status: open
+owner: Pol del Castillo
+customer: The policy-learning initiative — GR00T and the HF VLA baselines are only as good as this dataset.
+need: Fine-tuning VLAs needs a curated, well-annotated demonstration dataset on the actual task suite; ad-hoc recordings without QC produce policies that fail silently.
+benefit: A versioned LeRobot-format dataset covering the A2 task suite, with per-episode language instructions, quality checks, and train/eval splits.
+thesis-chapters: []
+related-epics: [B1-oarbot-bringup-teleop, A2-task-suite-metrics, C1-groot-finetuning]
+---
+
+## Background
+
+Collects the human demonstrations that everything downstream trains on,
+using the teleop setup from [B1](../B1-oarbot-bringup-teleop/README.qmd)
+on the task suite fixed in A2. Covers recording protocol (episodes per
+task, variation coverage), per-episode language instruction annotation,
+LeRobot dataset formatting, quality control (dropped frames, failed
+demos), and the train/eval split definition. The dataset version used
+by each training run is pinned in that run's experiment record.
+
+## Status log
+
+<!-- Dated bullets, newest first, each linking its weekly update:
+- **W<N> (YYYY-MM-DD):** what moved this week.
+  → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
+     Done epics add a `## Resolution` section above the listing. -->
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

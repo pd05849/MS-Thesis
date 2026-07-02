@@ -1,0 +1,36 @@
+---
+title: OARbot bring-up & teleoperation
+epic-id: B1-oarbot-bringup-teleop
+initiative: platform-data
+gantt-id: B1
+gantt-dates:
+- '2026-07-15'
+- '2026-09-15'
+status: open
+owner: Pol del Castillo
+customer: The demonstration-dataset epic (B2) — no reliable teleop, no data.
+need: OARbot must be controllable by a human demonstrator with synchronized camera + proprioception streams before any demonstrations can be recorded.
+benefit: A working teleoperation setup with calibrated sensing, verified end-to-end (operator input → robot motion → recorded observation/action streams).
+thesis-chapters: []
+related-epics: [B2-demonstration-dataset]
+---
+
+## Background
+
+Hardware/software bring-up of OARbot as a data-collection instrument:
+drivers and control interface, teleoperation input device, camera and
+joint-state streams, latency and calibration checks. Closes when a
+demonstrator can perform a task on the real robot and every relevant
+signal is recorded in sync — the precondition for
+[B2](../B2-demonstration-dataset/README.qmd).
+
+## Status log
+
+<!-- Dated bullets, newest first, each linking its weekly update:
+- **W<N> (YYYY-MM-DD):** what moved this week.
+  → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
+     Done epics add a `## Resolution` section above the listing. -->
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

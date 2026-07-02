@@ -4,7 +4,11 @@
   "words": [
     "Quarto", "revealjs", "gltf", "glb", "Typst",
     "Mermaid", "Anthropic", "MCP", "kanban",
-    "allowfullscreen", "Gantt", "gantt"
+    "allowfullscreen", "Gantt", "gantt",
+    "OARbot", "GR00T", "VLA", "VLAs", "VLM", "VLMs",
+    "SmolVLA", "OpenVLA", "LeRobot", "teleop",
+    "teleoperation", "proprioception", "bringup",
+    "finetuning", "Castillo"
   ],
   "ignorePaths": [
     "_site/**",

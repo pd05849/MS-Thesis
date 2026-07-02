@@ -1,0 +1,37 @@
+---
+title: Evaluation on complex tasks
+epic-id: C3-complex-task-evaluation
+initiative: policy-learning
+gantt-id: C3
+gantt-dates:
+- '2027-01-04'
+- '2027-02-28'
+status: open
+owner: Pol del Castillo
+customer: The thesis itself — this epic produces the results chapters' evidence.
+need: Trained policies must be evaluated on the real robot under the frozen A2 protocol, with enough trials per condition for the claims to hold statistically.
+benefit: The final results table — GR00T vs. SmolVLA vs. π0 on the complex-task suite — plus rollout videos and failure analysis, ready to cite from the Methods/Results chapters.
+thesis-chapters: []
+related-epics: [A2-task-suite-metrics, C1-groot-finetuning, C2-hf-vla-baselines]
+---
+
+## Background
+
+Runs the head-to-head evaluation of every policy from
+[C1](../C1-groot-finetuning/README.qmd) and
+[C2](../C2-hf-vla-baselines/README.qmd) on the real OARbot, following
+the protocol frozen in A2: per-task success rate, generalization to
+unseen variations, and data-efficiency curves. Each evaluation session
+is an experiment under this epic owning its trial logs and rollout
+videos; the failure analysis feeds Future Work.
+
+## Status log
+
+<!-- Dated bullets, newest first, each linking its weekly update:
+- **W<N> (YYYY-MM-DD):** what moved this week.
+  → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
+     Done epics add a `## Resolution` section above the listing. -->
+
+{{< include _listing.md >}}
+
+{{< include _revisions.md >}}

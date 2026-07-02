@@ -1,5 +1,5 @@
 ---
-title: "TODO: Thesis Title"
+title: "LfD for Complex Tasks — VLA Control of OARbot"
 ---
 
 This site has two halves. The **thesis** is the prose in
@@ -25,18 +25,28 @@ a new epic (`.\thesis.ps1 new epic …`).
 
 ```{mermaid}
 gantt
-    title TODO Thesis schedule
+    title Thesis schedule — LfD for OARbot control (dates TODO: confirm with advisor)
     dateFormat YYYY-MM-DD
     axisFormat %b
     tickInterval 1month
 
-    section A. Research
-    Example Epic                  :active, a1, 2026-06-01, 2026-07-15
+    section A. Foundations
+    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-08-15
+    Task suite & evaluation metrics           :        a2, 2026-08-01, 2026-09-01
 
-    section B. Thesis writing
-    Chapter drafts                :        b1, 2026-07-01, 42d
-    Thesis Draft Target Deadline  :milestone, b2, 2026-10-01, 1d
-    Thesis Submission Deadline    :milestone, b3, 2026-11-09, 1d
+    section B. Platform & data
+    OARbot bring-up & teleoperation           :active, b1, 2026-07-15, 2026-09-15
+    Demonstration dataset collection          :        b2, 2026-09-01, 2026-11-15
+
+    section C. Policy learning
+    GR00T fine-tuning on OARbot               :        c1, 2026-10-01, 2026-12-15
+    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-11-01, 2027-01-15
+    Evaluation on complex tasks               :        c3, 2027-01-04, 2027-02-28
+
+    section D. Thesis writing
+    Chapter drafts                            :        d1, 2026-12-01, 2027-03-15
+    Thesis Draft Target Deadline              :milestone, d2, 2027-03-15, 1d
+    Thesis Submission Deadline                :milestone, d3, 2027-04-15, 1d
 ```
 
 ## Initiative board
