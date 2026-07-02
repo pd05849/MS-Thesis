@@ -1,0 +1,228 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control",
+    "section": "",
+    "text": "0.1 Project schedule\nThis site has two halves. The thesis is the prose in Background, Methods, Operations, and Future Work — that’s what gets bound. The rest of the site is the project-management surface the thesis runs on: a top-level Gantt, the initiative board below, a weekly-update log, and an archive of source material.\nTop-level Gantt covering the work categories the advisor tracks. The Mermaid block below is the single source of truth for the schedule. Edit this block when the schedule changes; the per-WU frozen PNGs (updates/WU-*/media/gantt.png) regenerate automatically from it via scripts/render/build_gantt.py. Add a bar here whenever you scaffold a new epic (.\\thesis.ps1 new epic …).\ngantt\n    title Thesis schedule — LfD for OARbot control (dates TODO: confirm with advisor)\n    dateFormat YYYY-MM-DD\n    axisFormat %b\n    tickInterval 1month\n\n    section A. Foundations\n    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-08-15\n    Task suite & evaluation metrics           :        a2, 2026-08-01, 2026-09-01\n\n    section B. Platform & data\n    OARbot bring-up & teleoperation           :active, b1, 2026-07-15, 2026-09-15\n    Demonstration dataset collection          :        b2, 2026-09-01, 2026-11-15\n\n    section C. Policy learning\n    GR00T fine-tuning on OARbot               :        c1, 2026-10-01, 2026-12-15\n    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-11-01, 2027-01-15\n    Evaluation on complex tasks               :        c3, 2027-01-04, 2027-02-28\n\n    section D. Thesis writing\n    Chapter drafts                            :        d1, 2026-12-01, 2027-03-15\n    Thesis Draft Target Deadline              :milestone, d2, 2027-03-15, 1d\n    Thesis Submission Deadline                :milestone, d3, 2027-04-15, 1d",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>LfD for Complex Tasks — VLA Control of OARbot</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#initiative-board",
+    "href": "index.html#initiative-board",
+    "title": "Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control",
+    "section": "0.2 Initiative board",
+    "text": "0.2 Initiative board\nThe Gantt’s bars are epics. Each epic has a README under initiatives/ with a customer/need/benefit brief, related-epics graph, and an items listing. Everything below is generated from README front matter by scripts/render/build_board.py (a pre-render hook) — edit the front matter, never these tables. Schedule emphasis (crit bars) lives in the Mermaid Gantt above.\n\n\n0.2.1 A — Foundations — LfD, VLM/VLA, and the task suite\n\n\n\nGantt\nEpic\nStatus\nOwner\n\n\n\n\nA1\nLiterature review: LfD, VLM/VLA, GR00T\nin-progress\nPol del Castillo\n\n\nA2\nTask suite & evaluation metrics\nopen\nPol del Castillo\n\n\n\n\n\n0.2.2 B — Platform & data — OARbot bring-up and demonstrations\n\n\n\nGantt\nEpic\nStatus\nOwner\n\n\n\n\nB1\nOARbot bring-up & teleoperation\nopen\nPol del Castillo\n\n\nB2\nDemonstration dataset collection\nopen\nPol del Castillo\n\n\n\n\n\n0.2.3 C — Policy learning — GR00T and HF VLA fine-tuning + evaluation\n\n\n\nGantt\nEpic\nStatus\nOwner\n\n\n\n\nC1\nGR00T fine-tuning on OARbot\nopen\nPol del Castillo\n\n\nC2\nHF VLA baselines (SmolVLA / pi0)\nopen\nPol del Castillo\n\n\nC3\nEvaluation on complex tasks\nopen\nPol del Castillo",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>LfD for Complex Tasks — VLA Control of OARbot</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#item-board",
+    "href": "index.html#item-board",
+    "title": "Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control",
+    "section": "0.3 Item board",
+    "text": "0.3 Item board\n\n\n\n\nOpen 1\n\n\nA1-EX-001\n\nWhich VLA backbones fit OARbot and the available compute?\n\n\nA1 · Pol del Castillo\n\n\n\n\n\nIn progress 0\n\n\n\n\nBlocked 0\n\n\n\n\nDone 0\n\n\n\n\n\n0.3.1 Stale items\nin-progress items with no commit in 3+ weeks.\nNone — every in-progress item has recent activity.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>LfD for Complex Tasks — VLA Control of OARbot</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#where-to-go-from-here",
+    "href": "index.html#where-to-go-from-here",
+    "title": "Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control",
+    "section": "0.4 Where to go from here",
+    "text": "0.4 Where to go from here\n\nReading the thesis — start with Background and use the sidebar.\nReviewing weekly progress — see the weekly updates appendix (newest first).\nBrowsing the project tree — see the initiatives appendix; each initiative lists its epics, each epic lists its items + status log.\nLooking up source material — see the archive appendix, with an external index for files too large to carry in git.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>LfD for Complex Tasks — VLA Control of OARbot</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-background/index.html",
+    "href": "chapters/01-background/index.html",
+    "title": "2  Background",
+    "section": "",
+    "text": "TODO: Part intro — why this research area matters and what question the thesis answers.",
+    "crumbs": [
+      "Background",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Background</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-background/CH-1a-example-section.html",
+    "href": "chapters/01-background/CH-1a-example-section.html",
+    "title": "3  Example section",
+    "section": "",
+    "text": "TODO: First content section. Chapter subsection files follow the CH-&lt;N&gt;&lt;x&gt;-&lt;slug&gt;.qmd naming convention and are registered in _quarto.yml under book.chapters. Cite sources with @key against references.bib.",
+    "crumbs": [
+      "Background",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Example section</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-methods/index.html",
+    "href": "chapters/02-methods/index.html",
+    "title": "4  Methods",
+    "section": "",
+    "text": "TODO: Part intro — equipment, experimental setup, and how evidence flows from the lab into the initiatives/ tree (every experiment in the PM layer that produces thesis-grade results gets written up here).",
+    "crumbs": [
+      "Methods",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/index.html",
+    "href": "chapters/03-operation/index.html",
+    "title": "5  Operations",
+    "section": "",
+    "text": "TODO: Part intro for operating procedures. SOPs live in sops/ and render in three audience variants via Quarto profiles (--profile sop-detailed | sop-checklist | sop-walkthrough). Each SOP carries a formal revision block (rendered by the  shortcode) plus an auto-generated git change history.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Operations</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html",
+    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html",
+    "title": "6  SOP-01: Example procedure",
+    "section": "",
+    "text": "6.1 Purpose",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#purpose",
+    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#purpose",
+    "title": "6  SOP-01: Example procedure",
+    "section": "",
+    "text": "TODO: One sentence on what this procedure accomplishes and when it applies. (This SOP exists so the template renders a working example of the revision block + profiles + change history — replace it with your first real procedure.)",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#prerequisites",
+    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#prerequisites",
+    "title": "6  SOP-01: Example procedure",
+    "section": "6.2 Prerequisites",
+    "text": "6.2 Prerequisites\n\nTODO",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#verification",
+    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#verification",
+    "title": "6  SOP-01: Example procedure",
+    "section": "6.3 Verification",
+    "text": "6.3 Verification\n\nTODO",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#change-history",
+    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#change-history",
+    "title": "6  SOP-01: Example procedure",
+    "section": "6.4 Change history",
+    "text": "6.4 Change history\nOwner: TODO Owner\n\n\n\n\n\n\n\n\nDate\nAuthor\nChange\n\n\n\n\n2026-06-12\nAmmarBarbee17\nInitial commit: Quarto thesis + project-management template",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/CH-04-future-work.html",
+    "href": "chapters/CH-04-future-work.html",
+    "title": "7  Future work",
+    "section": "",
+    "text": "TODO: What the thesis opens up but does not close. Future-shell epics in the initiatives/ tree are good source material here.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Future work</span>"
+    ]
+  },
+  {
+    "objectID": "updates/index.html",
+    "href": "updates/index.html",
+    "title": "Appendix A — Weekly updates",
+    "section": "",
+    "text": "TODO: Weekly status slides shared with the advisor. Each entry is a standalone revealjs deck. Click any card to open the slides; reveal.js navigation (arrow keys, ESC for overview) applies.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 1 — kickoff: repo, schedule, and thesis scope\n\n\nTODO: one-line summary for the listing card\n\n\n\nJul 2, 2026\n\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Weekly updates</span>"
+    ]
+  },
+  {
+    "objectID": "initiatives/index.html",
+    "href": "initiatives/index.html",
+    "title": "Appendix B — Initiatives",
+    "section": "",
+    "text": "TODO: Initiatives are the top-level work categories that mirror the sections of the project Gantt. Each initiative groups its epics; each epic groups its experiments, issues, and features.\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Title\n      \n      \n        status\n      \n      \n        gantt-section\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\ngantt-section\n\n\n\nstatus\n\n\n\n\n\n\n\n\nFoundations — LfD, VLM/VLA, and the task suite\n\n\nA\n\n\nin-progress\n\n\n\n\n\n\nPlatform & data — OARbot bring-up and demonstrations\n\n\nB\n\n\nopen\n\n\n\n\n\n\nPolicy learning — GR00T and HF VLA fine-tuning + evaluation\n\n\nC\n\n\nopen\n\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Initiatives</span>"
+    ]
+  },
+  {
+    "objectID": "archive/index.html",
+    "href": "archive/index.html",
+    "title": "Appendix C — Archive",
+    "section": "",
+    "text": "C.1 Buckets\nBuckets are filesystem dumps under archive/ — there is no per-bucket rendered page. Use a local clone to browse contents; this table is the inventory. Files over ~25 MB get an external-index entry instead of a copy (git-lfs carries the rest — see .gitattributes).\nSee external-index.qmd for files that stay at their original cloud paths.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Archive</span>"
+    ]
+  },
+  {
+    "objectID": "archive/index.html#buckets",
+    "href": "archive/index.html#buckets",
+    "title": "Appendix C — Archive",
+    "section": "",
+    "text": "Bucket\nDescription\nFiles\n\n\n\n\n(none yet)\nTODO: add a row per imported bucket\n—",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Archive</span>"
+    ]
+  },
+  {
+    "objectID": "archive/external-index.html",
+    "href": "archive/external-index.html",
+    "title": "Appendix D — External archive index",
+    "section": "",
+    "text": "D.1 Always-external (vendor + heavy media)",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>External archive index</span>"
+    ]
+  },
+  {
+    "objectID": "archive/external-index.html#always-external-vendor-heavy-media",
+    "href": "archive/external-index.html#always-external-vendor-heavy-media",
+    "title": "Appendix D — External archive index",
+    "section": "",
+    "text": "What\nLocation\n\n\n\n\n(none yet)\nTODO: e.g. C:\\Users\\you\\OneDrive - University\\research\\vendor-installers",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>External archive index</span>"
+    ]
+  },
+  {
+    "objectID": "archive/external-index.html#oversize-files-skipped-from-buckets-25-mb",
+    "href": "archive/external-index.html#oversize-files-skipped-from-buckets-25-mb",
+    "title": "Appendix D — External archive index",
+    "section": "D.2 Oversize files skipped from buckets (> 25 MB)",
+    "text": "D.2 Oversize files skipped from buckets (&gt; 25 MB)\n\n\n\nFile\nSize\nSource\n\n\n\n\n(none yet)\n—\n—",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>External archive index</span>"
+    ]
+  }
+]
