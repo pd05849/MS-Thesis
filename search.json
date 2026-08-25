@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control",
     "section": "",
-    "text": "0.1 Project schedule\nThis site has two halves. The thesis is the prose in Background, Methods, Operations, and Future Work — that’s what gets bound. The rest of the site is the project-management surface the thesis runs on: a top-level Gantt, the initiative board below, a weekly-update log, and an archive of source material.\nTop-level Gantt covering the work categories the advisor tracks. The Mermaid block below is the single source of truth for the schedule. Edit this block when the schedule changes; the per-WU frozen PNGs (updates/WU-*/media/gantt.png) regenerate automatically from it via scripts/render/build_gantt.py. Add a bar here whenever you scaffold a new epic (.\\thesis.ps1 new epic …).\ngantt\n    title Thesis schedule — LfD for OARbot control (dates TODO: confirm with advisor)\n    dateFormat YYYY-MM-DD\n    axisFormat %b\n    tickInterval 1month\n\n    section A. Foundations\n    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-08-15\n    Task suite & evaluation metrics           :        a2, 2026-08-01, 2026-09-01\n\n    section B. Platform & data\n    OARbot bring-up & teleoperation           :active, b1, 2026-07-15, 2026-09-15\n    Demonstration dataset collection          :        b2, 2026-09-01, 2026-11-15\n\n    section C. Policy learning\n    GR00T fine-tuning on OARbot               :        c1, 2026-10-01, 2026-12-15\n    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-11-01, 2027-01-15\n    Evaluation on complex tasks               :        c3, 2027-01-04, 2027-02-28\n\n    section D. Thesis writing\n    Chapter drafts                            :        d1, 2026-12-01, 2027-03-15\n    Thesis Draft Target Deadline              :milestone, d2, 2027-03-15, 1d\n    Thesis Submission Deadline                :milestone, d3, 2027-04-15, 1d",
+    "text": "0.1 Project schedule\nThis site has two halves. The thesis is the prose in Background, Methods, Operations, and Future Work — that’s what gets bound. The rest of the site is the project-management surface the thesis runs on: a top-level Gantt, the initiative board below, a weekly-update log, and an archive of source material.\nTop-level Gantt covering the work categories the advisor tracks. The Mermaid block below is the single source of truth for the schedule. Edit this block when the schedule changes; the per-WU frozen PNGs (updates/WU-*/media/gantt.png) regenerate automatically from it via scripts/render/build_gantt.py. Add a bar here whenever you scaffold a new epic (.\\thesis.ps1 new epic …).\ngantt\n    title Thesis schedule — experiments to Dec 2026, writing Jan–Feb, defense Mar 2027\n    dateFormat YYYY-MM-DD\n    axisFormat %b\n    tickInterval 1month\n\n    section A. Foundations\n    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-09-30\n    Task suite & evaluation metrics           :        a2, 2026-09-01, 2026-09-25\n\n    section B. Platform & data\n    OARbot bring-up & teleoperation           :active, b1, 2026-08-25, 2026-09-25\n    Demonstration dataset collection          :        b2, 2026-09-21, 2026-11-13\n\n    section C. Policy learning\n    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-10-05, 2026-11-20\n    GR00T fine-tuning on OARbot               :        c1, 2026-10-26, 2026-12-11\n    Evaluation on complex tasks               :crit,   c3, 2026-11-16, 2026-12-18\n    Results freeze                            :milestone, m1, 2026-12-18, 1d\n\n    section D. Thesis writing\n    Outline + results figures                 :        d0, 2026-12-07, 2026-12-23\n    Chapter drafts                            :        d1, 2027-01-04, 2027-02-26\n    Full draft to advisor                     :milestone, d2, 2027-02-26, 1d\n    Defense (exact date TBC with advisor)     :milestone, d3, 2027-03-15, 1d",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>LfD for Complex Tasks — VLA Control of OARbot</span>"
     ]
@@ -84,68 +84,167 @@
     ]
   },
   {
-    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html",
-    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html",
-    "title": "6  SOP-01: Example procedure",
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html",
+    "href": "chapters/03-operation/roadmap-fall-2026.html",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
     "section": "",
-    "text": "6.1 Purpose",
+    "text": "6.1 Research questions\nWorking plan from today (Aug 25) to the results freeze in December. The top-level Gantt is the source of truth for dates; this page holds the reasoning behind them: research questions, week-level milestones, the quantifiables spec (metrics, generalization tiers, failure taxonomy), the literature map, the open-source stack, and how AI research assistants are used. Revise it whenever the plan changes — it becomes the skeleton of the Methods chapter and the defense timeline slide.\nThe thesis claim is built around three questions. Every experiment should answer one of them; anything that doesn’t is scope creep.\nRQ1 — Adaptation. Can current open vision-language-action (VLA) foundation models (NVIDIA GR00T N1.5, SmolVLA, optionally π0) be adapted to a new embodiment — the OARbot (Clearpath Dingo omni base + Kinova Jaco Gen2 6-DOF arm) — with a modest demonstration dataset collected in the lab?\nRQ2 — Comparison & generalization. On a fixed task suite, how do the fine-tuned VLAs compare against each other and against a from-scratch imitation baseline (ACT) trained only on our demonstrations — both on in-distribution success rate and on how gracefully performance degrades across generalization tiers (unseen poses, distractors, novel object instances, paraphrased instructions)? The baseline is what makes generalization attributable: if the VLAs degrade less than ACT out of distribution, that gap is the measured value of internet-scale pretraining.\nRQ3 — Practicality. What are the real compute and data costs — fine-tuning wall-clock on a DGX Spark, demos-per-task needed, on-robot inference rates — and what does that imply for small-lab replication?\nRQ3 is the differentiator: most VLA papers report results on the authors’ hardware fleet; a careful account of what it takes to adapt these models on one robot with two lab machines is a genuine contribution.",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#compute-and-platform-allocation",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#compute-and-platform-allocation",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.2 Compute and platform allocation",
+    "text": "6.2 Compute and platform allocation\n\n\n\nMachine\nRole\n\n\n\n\nDGX Spark (GB10, 128 GB unified memory)\nAll fine-tuning: GR00T N1.5 (NVIDIA ships a DGX Spark fine-tuning playbook for it), SmolVLA full fine-tune, π0 LoRA if attempted\n\n\nRTX workstation (“7080” — confirm exact model, likely RTX 5080)\nRobot-side: teleop, data recording, policy inference at eval time, dataset visualization\n\n\nOARbot helper laptop + Dingo onboard PC\nROS 2 Jazzy stack, drivers, cameras (per the OARbot docs)\n\n\n\nKeep training and robot operation on separate machines from day one so data collection never competes with training runs.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#month-by-month-plan",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#month-by-month-plan",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.3 Month-by-month plan",
+    "text": "6.3 Month-by-month plan\n\n6.3.1 September — bring-up, task suite, literature (epics B1, A2, A1)\n\nWeek of Sep 1: Full teleop chain on one OARbot: drive the base, command the arm (SpaceMouse), stream both Azure Kinects. Verify E-stop and deadman behavior. Note which sensors are actually usable (docs already flag the UWB units as inoperable).\nWeek of Sep 8: Record demonstrations into LeRobotDataset format — joint states + base velocity + camera frames, replay a recorded episode open-loop on the robot to prove the pipeline is lossless. This replay test is the single most important de-risking step of the semester.\nWeek of Sep 15: Freeze the task suite (epic A2): 3 tasks in increasing difficulty, e.g. (T1) tabletop pick-and-place, arm only; (T2) fetch — navigate to a table, grasp, return; (T3) a true mobile-manipulation task with base+arm coordination (open a door, clear a table). Define per-task success criteria, the staged progress rubric (reach / grasp / transport / place), the in-distribution randomization grid, and the generalization tiers G1–G4 (see the quantifiables spec below) before collecting data. Confirm the suite with the advisor. Also start the action-space decision log: every embodiment-design choice (joint deltas vs. absolutes, base twist representation, chunk length, control rates, normalization) gets a dated entry with the reasoning — this log becomes the Methods section on adapting VLA action heads to a mobile manipulator.\nWeek of Sep 22: Pilot data collection: ~10 episodes per task, train a quick SmolVLA sanity run on T1, fix whatever breaks.\nGate 1 (Sep 26): teleop + record + replay all work, task suite signed off. Fallback if late: drop T3 base motion and run an arm-centric thesis — decide here, not in November.\n\n\n\n6.3.2 October — dataset at scale + first baseline (epics B2, C2)\n\nWeeks of Oct 5 / Oct 12: Main collection push, target 50–100 episodes per task (ACT/SmolVLA-class results are routinely reported around 50 demos/task; more helps T3). Interleave tasks and vary object poses per the randomization grid. Nightly QC script: episode counts, joint-limit outliers, dropped frames.\nWeek of Oct 19: SmolVLA fine-tuned per-task on the Spark, and ACT trained from scratch on the identical data — it trains in hours and rides along on the same LeRobot dataset, giving the no-pretraining reference point for RQ2. First closed-loop rollouts on the robot.\nWeek of Oct 26: Start GR00T N1.5 fine-tuning (epic C1) — the new-embodiment head needs the most debugging lead time. First structured mini-eval (10 trials/task) of SmolVLA.\nGate 2 (Oct 31): SmolVLA achieves non-zero success on T1 with a documented eval protocol. If zero: freeze collection, debug the data/normalization/camera pipeline first — more bad data won’t help.\n\n\n\n6.3.3 November — GR00T + full evaluation (epics C1, C3)\n\nWeeks of Nov 2 / Nov 9: GR00T N1.5 tuned across tasks; top-up data collection where QC shows gaps; π0 (LoRA via LeRobot/openpi) only if both main models are stable.\nWeek of Nov 16: Full evaluation begins (epic C3): ≥20 trials/task/policy on the shared in-distribution grid, everything in the quantifiables spec logged per trial, video of every trial. Budget realistically — 3 tasks × 4 policies (ACT, SmolVLA, GR00T, π0-if-attempted) × 20 trials at ~3 min/trial is ~12 robot-hours per full round, plus resets.\nGate 3 (Nov 27): Decide final comparison set (ACT + 2 or 3 VLAs) and confirm the data-scale ablation (retrain at 25/50/100 demos on one task) fits the calendar.\n\n\n\n6.3.4 December — finish, freeze, outline (epics C3, D)\n\nWeeks of Dec 1 / Dec 7: Complete in-distribution eval rounds + data-scale ablation; generalization round — tiers G1–G4 on each model’s best checkpoint only (10 trials/tier, see quantifiables spec).\nWeek of Dec 14: Re-runs and holes only. Results freeze Dec 18 — after this date, no new experiments, only analysis.\nWeek of Dec 21: All results tables and figures generated by script from logged data; chapter outline drafted in chapters/.\n\n\n\n6.3.5 January–March 2027\nChapter drafts Jan 4 – Feb 26 (Background and Methods first — most of Methods should fall out of this page and the epic READMEs), full draft to advisor end of February, defense mid-March (confirm the exact date and committee logistics with the advisor in September, not January).",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#quantifiables-what-gets-measured-and-reported",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#quantifiables-what-gets-measured-and-reported",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.4 Quantifiables — what gets measured and reported",
+    "text": "6.4 Quantifiables — what gets measured and reported\nWhat the results chapter must contain, modeled on what this class of papers (ACT, Diffusion Policy, OpenVLA, π0, SmolVLA, GR00T, Mobile ALOHA) actually reports. Frozen in epic A2 before data collection; every eval trial logs a row with all of these fields plus a video path.\n\n6.4.1 Decision thresholds — what “achieved” means\nTargets are pre-registered thresholds, not promises. A miss, analyzed honestly, is still a result.\n\nPlatform validated: ≥1 policy reaches ≥70% success on T1 in-distribution.\nPretraining transfer confirmed: the VLAs beat from-scratch ACT on the generalization tiers by ≥15 percentage points average. A null or negative gap = “pretraining did not pay off at this data scale on this embodiment” — a publishable negative result.\nPracticality documented: complete cost sheet (below) for every model, no gaps.\n\n\n\n6.4.2 Primary metrics (every policy, every task)\n\n\n\n\n\n\n\n\nMetric\nDefinition\nReported as\n\n\n\n\nSuccess rate\nBinary per trial against the frozen rubric; human intervention = failure\n% with 95% Wilson CI, n ≥ 20\n\n\nProgress score\nStaged credit: reach 0.25 / grasp 0.5 / transport 0.75 / place 1.0 (per-task rubric)\nMean 0–1; separates “never grasps” from “drops at the end” when success rates are low\n\n\nTime to completion\nSuccessful trials only, start signal → success condition\nMedian [IQR] seconds\n\n\n\n\n\n6.4.3 Secondary metrics\n\n\n\n\n\n\n\n\nMetric\nDefinition\nReported as\n\n\n\n\nInference latency\nCamera frame in → action chunk out, on the RTX workstation\nms per chunk + achieved control rate (Hz)\n\n\nGeneralization gap\nIn-distribution success minus per-tier success\nPercentage points, per tier per policy\n\n\nData efficiency\nSuccess rate at 25 / 50 / 100 training demos (one task, all policies)\nCurve — the small-lab money figure\n\n\n\n\n\n6.4.4 Generalization tiers (RQ2)\nEvaluated on each model’s best checkpoint only, 10 trials/tier, selection rules frozen in A2:\n\nG0 — in-distribution: objects and poses from the training grid.\nG1 — spatial: object poses outside the training grid.\nG2 — visual: distractor objects + lighting change.\nG3 — object: novel instance of the same category (different mug, different box).\nG4 — language: paraphrased instruction, same task (“pick up the cup” → “grab the mug”). VLA-only tier — ACT has no language input, which is itself part of the comparison story.\n\n\n\n6.4.5 Failure taxonomy\nEvery failed trial gets a first-failure label from this closed list, logged at eval time (10 seconds of effort) with the video path:\nperception/grounding (approached wrong object) · navigation/base-pose (stopped out of reach) · grasp (contact but slip/miss) · manipulation-trajectory (jerky/unsafe motion, joint limit) · instruction (did the wrong task) · stall/timeout · hardware (excluded and retried, not counted).\nRendered as stacked bars per policy × task — this figure explains why the success rates differ and is the backbone of the analysis chapter.\n\n\n6.4.6 Practicality cost sheet (RQ3)\nPer model: fine-tuning wall-clock hours and peak memory on the DGX Spark, trainable parameter count (LoRA vs. full), GPU-hours per training run, on-robot inference hardware requirements. Plus data cost: minutes per collected episode, total collection hours, retake rate.\n\n\n6.4.7 Deliverables checklist (results chapter)\n\nT1 Main results: success ± CI, task × policy, in-distribution\nT2 Generalization matrix: policy × tier\nT3 Efficiency: latency, control rate, completion time\nT4 Cost sheet (RQ3)\nF1 Data-scale curve · F2 Failure-mode stacked bars · F3 Qualitative rollout film-strips (best + worst per policy)\n\nProtocol hygiene: the randomization grid and rubrics are frozen before collection; checkpoint selection criteria defined before eval; all runs reported (no cherry-picked seeds); every trial has video.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#literature-map",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#literature-map",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.5 Literature map",
+    "text": "6.5 Literature map\nOrganized by the Background chapter’s likely sections. Maintain citations in Zotero and export to references.bib (keep BibTeX keys stable). Verify every reference on arXiv/Semantic Scholar before it enters the bib file — never cite from an LLM’s memory.\n1. Learning from demonstration — foundations\n\nArgall, Chernova, Veloso, Browning (2009), A survey of robot learning from demonstration — the canonical survey to anchor the chapter.\nPomerleau (1988), ALVINN — behavioral cloning origin.\nRoss, Gordon, Bagnell (2011), DAgger — compounding-error argument every IL thesis needs.\n\n2. Modern imitation learning architectures\n\nZhao et al. (RSS 2023), ACT / ALOHA — action chunking; the direct ancestor of today’s VLA action heads.\nChi et al. (RSS 2023), Diffusion Policy — generative action heads.\nLipman et al. (ICLR 2023), Flow Matching — theory behind π0-style and GR00T-style flow action heads.\nFu, Zhao, Finn (2024), Mobile ALOHA — the closest published setup to this thesis: whole-body IL on a mobile manipulator.\n\n3. Vision-language-action models\n\nBrohan et al., RT-1 (2022) and RT-2 (2023) — the VLA lineage.\nOpen X-Embodiment collaboration (2023/24) — cross-embodiment pretraining; why adapting a generalist to OARbot is plausible at all.\nOcto Model Team (2024) — open generalist policy.\nKim et al. (2024), OpenVLA — open 7B VLA + fine-tuning recipes (see also the OpenVLA-OFT follow-up on efficient fine-tuning).\nBlack et al. (2024), π0; Physical Intelligence (2025), π0.5 — flow matching VLA, open weights via openpi.\nHugging Face (2025), SmolVLA — small (~450M) VLA designed for exactly this compute class; likely the workhorse baseline.\nNVIDIA (2025), GR00T N1 paper (+ N1.5 release notes) — the primary model; its dual-system architecture and new-embodiment fine-tuning story are directly load-bearing.\nGoogle DeepMind (2025), Gemini Robotics — closed, but frames the state of the art in Background.\n\n4. Mobile manipulation and assistive context\n\nTidyBot (2023), HomeRobot/OVMM (2023), BEHAVIOR-1K (2023) — mobile-manipulation task framing and benchmarks.\nRPI’s own OARbot publications — get the list from the advisor; the assistive-robotics motivation should cite the lab’s line of work.\n\n5. Datasets and evaluation methodology\n\nDROID (2024), BridgeData V2 (2023), AgiBot World (2025) — large-scale teleop dataset practice worth imitating at small scale.\nLIBERO (2023) — task-suite design and eval discipline.\nSimplerEnv — Li et al. (2024), Evaluating Real-World Robot Manipulation Policies in Simulation — the real-vs-sim eval gap.\nRecent work on statistically sound robot policy evaluation (trial counts, confidence intervals, A/B protocols) — good target for a deep-research sweep, see below.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#open-source-stack",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#open-source-stack",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.6 Open-source stack",
+    "text": "6.6 Open-source stack\n\n\n\nResource\nUse here\n\n\n\n\nLeRobot\nDataset format, teleop recording, SmolVLA + π0 (PyTorch) training/eval — the backbone of B2/C2\n\n\nIsaac GR00T\nGR00T N1.5 checkpoints + new-embodiment fine-tuning scripts; check NVIDIA’s DGX Spark playbook\n\n\nopenpi\nπ0/π0.5 reference implementation (JAX) if the LeRobot port falls short\n\n\noarbots repo\nLab’s ROS 2 stack, drivers, teleop — extend, don’t rewrite\n\n\nHugging Face Hub\nHost the OARbot demonstration dataset (private repo) + fine-tuned checkpoints; free provenance and versioning\n\n\nWeights & Biases (or TensorBoard)\nTraining curves + eval run tracking, linked from weekly updates\n\n\nZotero → references.bib\nSingle bibliography pipeline into Quarto\n\n\n\nStretch only (explicitly out of scope unless everything lands early): Isaac Lab / SimplerEnv-style sim twin of a task for cheap eval — you have Isaac Sim experience from the SO-101 project, but a sim twin is a second thesis; park it in Future Work.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#using-ai-research-assistants",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#using-ai-research-assistants",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.7 Using AI research assistants",
+    "text": "6.7 Using AI research assistants\nDivision of labor — each tool where it is strongest:\n\nGemini Deep Research — breadth: one report per Background section above (“annotated bibliography of VLA fine-tuning on novel embodiments 2023–2026, with arXiv links”). Also the eval-methodology sweep in §5.\nChatGPT (deep research) — cross-check Gemini’s reports; protocol questions (“how many trials for a detectable 15-point success-rate difference between two policies?”).\nNotebookLM — load the collected PDFs per chapter section; ask grounded cross-paper questions while writing Background.\nClaude Code — everything in-repo: LeRobot/GR00T pipeline code, QC scripts, eval analysis, figures, Quarto chapter drafting, and keeping this PM surface honest.\n\nStanding rule: LLM output is a lead, never a citation. Every claim that survives into the thesis gets verified against the primary source, and every reference is checked on arXiv before entering references.bib.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#risk-register",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#risk-register",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.8 Risk register",
+    "text": "6.8 Risk register\n\n\n\n\n\n\n\n\nRisk\nLikelihood\nMitigation\n\n\n\n\nBring-up eats October (drivers, arm, cameras)\nHigh\nGate 1 fallback: arm-only task suite, decided Sep 26\n\n\nDemo data too little/noisy for T3\nMedium\nTiered tasks — T1/T2 alone still answer RQ1–RQ3; data-scale ablation turns “not enough data” into a finding\n\n\nGR00T new-embodiment head underperforms\nMedium\nSmolVLA is the guaranteed baseline; a negative GR00T result, carefully analyzed, is still a thesis result\n\n\nEval time underestimated\nHigh\nProtocol fixed in Sept; ≥20 trials budgeted on the calendar, not squeezed in\n\n\nGeneralization round balloons eval time\nMedium\nTiers only on best checkpoints, 10 trials/tier; if squeezed, run G1–G4 on T1+T2 only\n\n\nTwo-robot temptation (multi-robot experiments)\nMedium\nOne OARbot is the experiment platform; the second is spare parts / backup until the freeze\n\n\nWriting starts late\nMedium\nSection D outline bar in December; Methods accretes from epic READMEs all semester",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/roadmap-fall-2026.html#cadence",
+    "href": "chapters/03-operation/roadmap-fall-2026.html#cadence",
+    "title": "6  Fall 2026 Roadmap — experiments to December",
+    "section": "6.9 Cadence",
+    "text": "6.9 Cadence\nWeekly update (.\\thesis.ps1 new wu) every Friday: progress, frozen Gantt snapshot, blockers, questions for advisor. The board and Gantt on the home page stay the single source of truth — no parallel tracker (Notion/Trello) gets created.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Fall 2026 Roadmap — experiments to December</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html",
+    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html",
+    "title": "7  SOP-01: Example procedure",
+    "section": "",
+    "text": "7.1 Purpose",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#purpose",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#purpose",
-    "title": "6  SOP-01: Example procedure",
+    "title": "7  SOP-01: Example procedure",
     "section": "",
     "text": "TODO: One sentence on what this procedure accomplishes and when it applies. (This SOP exists so the template renders a working example of the revision block + profiles + change history — replace it with your first real procedure.)",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#prerequisites",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#prerequisites",
-    "title": "6  SOP-01: Example procedure",
-    "section": "6.2 Prerequisites",
-    "text": "6.2 Prerequisites\n\nTODO",
+    "title": "7  SOP-01: Example procedure",
+    "section": "7.2 Prerequisites",
+    "text": "7.2 Prerequisites\n\nTODO",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#verification",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#verification",
-    "title": "6  SOP-01: Example procedure",
-    "section": "6.3 Verification",
-    "text": "6.3 Verification\n\nTODO",
+    "title": "7  SOP-01: Example procedure",
+    "section": "7.3 Verification",
+    "text": "7.3 Verification\n\nTODO",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#change-history",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#change-history",
-    "title": "6  SOP-01: Example procedure",
-    "section": "6.4 Change history",
-    "text": "6.4 Change history\nOwner: TODO Owner\n\n\n\n\n\n\n\n\nDate\nAuthor\nChange\n\n\n\n\n2026-06-12\nAmmarBarbee17\nInitial commit: Quarto thesis + project-management template",
+    "title": "7  SOP-01: Example procedure",
+    "section": "7.4 Change history",
+    "text": "7.4 Change history\nOwner: TODO Owner\n\n\n\n\n\n\n\n\nDate\nAuthor\nChange\n\n\n\n\n2026-06-12\nAmmarBarbee17\nInitial commit: Quarto thesis + project-management template",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/CH-04-future-work.html",
     "href": "chapters/CH-04-future-work.html",
-    "title": "7  Future work",
+    "title": "8  Future work",
     "section": "",
     "text": "TODO: What the thesis opens up but does not close. Future-shell epics in the initiatives/ tree are good source material here.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Future work</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Future work</span>"
     ]
   },
   {

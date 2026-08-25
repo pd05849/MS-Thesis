@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pd05849.github.io/MS-Thesis/index.html</loc>
-    <lastmod>2026-07-02T15:48:15.870Z</lastmod>
+    <lastmod>2026-08-25T16:54:09.968Z</lastmod>
   </url>
   <url>
     <loc>https://pd05849.github.io/MS-Thesis/chapters/01-background/index.html</loc>
@@ -19,6 +19,10 @@
   <url>
     <loc>https://pd05849.github.io/MS-Thesis/chapters/03-operation/index.html</loc>
     <lastmod>2026-07-02T15:42:37.980Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pd05849.github.io/MS-Thesis/chapters/03-operation/roadmap-fall-2026.html</loc>
+    <lastmod>2026-08-25T17:22:15.048Z</lastmod>
   </url>
   <url>
     <loc>https://pd05849.github.io/MS-Thesis/chapters/03-operation/sops/SOP-01-example-procedure.html</loc>
@@ -46,6 +50,6 @@
   </url>
   <url>
     <loc>https://pd05849.github.io/MS-Thesis/Learning-from-Demonstration-for-Complex-Tasks--Vision-Language-Action-Models-for-OARbot-Control.pdf</loc>
-    <lastmod>2026-07-02T16:25:14.390Z</lastmod>
+    <lastmod>2026-08-25T17:58:15.361Z</lastmod>
   </url>
 </urlset>

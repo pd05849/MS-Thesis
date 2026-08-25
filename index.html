@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pol del Castillo">
-<meta name="dcterms.date" content="2026-07-02">
+<meta name="dcterms.date" content="2026-08-25">
 
 <title>Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control</title>
 <style>
@@ -177,8 +177,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./chapters/03-operation/roadmap-fall-2026.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fall 2026 Roadmap — experiments to December</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./chapters/03-operation/sops/SOP-01-example-procedure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span></a>
   </div>
 </li>
       </ul>
@@ -186,7 +192,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chapters/CH-04-future-work.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Future work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Future work</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -271,7 +277,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 2, 2026</p>
+      <p class="date">August 25, 2026</p>
     </div>
   </div>
   
@@ -296,28 +302,30 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">gantt
-    title Thesis schedule — LfD for OARbot control (dates TODO: confirm with advisor)
+    title Thesis schedule — experiments to Dec 2026, writing Jan–Feb, defense Mar 2027
     dateFormat YYYY-MM-DD
     axisFormat %b
     tickInterval 1month
 
     section A. Foundations
-    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-08-15
-    Task suite &amp; evaluation metrics           :        a2, 2026-08-01, 2026-09-01
+    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-09-30
+    Task suite &amp; evaluation metrics           :        a2, 2026-09-01, 2026-09-25
 
     section B. Platform &amp; data
-    OARbot bring-up &amp; teleoperation           :active, b1, 2026-07-15, 2026-09-15
-    Demonstration dataset collection          :        b2, 2026-09-01, 2026-11-15
+    OARbot bring-up &amp; teleoperation           :active, b1, 2026-08-25, 2026-09-25
+    Demonstration dataset collection          :        b2, 2026-09-21, 2026-11-13
 
     section C. Policy learning
-    GR00T fine-tuning on OARbot               :        c1, 2026-10-01, 2026-12-15
-    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-11-01, 2027-01-15
-    Evaluation on complex tasks               :        c3, 2027-01-04, 2027-02-28
+    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-10-05, 2026-11-20
+    GR00T fine-tuning on OARbot               :        c1, 2026-10-26, 2026-12-11
+    Evaluation on complex tasks               :crit,   c3, 2026-11-16, 2026-12-18
+    Results freeze                            :milestone, m1, 2026-12-18, 1d
 
     section D. Thesis writing
-    Chapter drafts                            :        d1, 2026-12-01, 2027-03-15
-    Thesis Draft Target Deadline              :milestone, d2, 2027-03-15, 1d
-    Thesis Submission Deadline                :milestone, d3, 2027-04-15, 1d
+    Outline + results figures                 :        d0, 2026-12-07, 2026-12-23
+    Chapter drafts                            :        d1, 2027-01-04, 2027-02-26
+    Full draft to advisor                     :milestone, d2, 2027-02-26, 1d
+    Defense (exact date TBC with advisor)     :milestone, d3, 2027-03-15, 1d
 </pre>
 </div>
 <p></p></figure><p></p>

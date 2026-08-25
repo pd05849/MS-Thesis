@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-08-25">
+
+<title>6&nbsp; Fall 2026 Roadmap — experiments to December – Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" rel="next">
+<link href="../../chapters/03-operation/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f87fbdfba3fad83ab885450bd0905912.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/roadmap-fall-2026.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fall 2026 Roadmap — experiments to December</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">LfD for Complex Tasks — VLA Control of OARbot</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Background</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/01-background/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/01-background/CH-1a-example-section.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Example section</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/02-methods/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Methods</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Operations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/03-operation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Operations</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/03-operation/roadmap-fall-2026.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fall 2026 Roadmap — experiments to December</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../chapters/CH-04-future-work.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Future work</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../updates/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Weekly updates</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../initiatives/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Initiatives</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../archive/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Archive</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../archive/external-index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">External archive index</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link active" data-scroll-target="#research-questions"><span class="header-section-number">6.1</span> Research questions</a></li>
+  <li><a href="#compute-and-platform-allocation" id="toc-compute-and-platform-allocation" class="nav-link" data-scroll-target="#compute-and-platform-allocation"><span class="header-section-number">6.2</span> Compute and platform allocation</a></li>
+  <li><a href="#month-by-month-plan" id="toc-month-by-month-plan" class="nav-link" data-scroll-target="#month-by-month-plan"><span class="header-section-number">6.3</span> Month-by-month plan</a>
+  <ul class="collapse">
+  <li><a href="#september-bring-up-task-suite-literature-epics-b1-a2-a1" id="toc-september-bring-up-task-suite-literature-epics-b1-a2-a1" class="nav-link" data-scroll-target="#september-bring-up-task-suite-literature-epics-b1-a2-a1"><span class="header-section-number">6.3.1</span> September — bring-up, task suite, literature (epics B1, A2, A1)</a></li>
+  <li><a href="#october-dataset-at-scale-first-baseline-epics-b2-c2" id="toc-october-dataset-at-scale-first-baseline-epics-b2-c2" class="nav-link" data-scroll-target="#october-dataset-at-scale-first-baseline-epics-b2-c2"><span class="header-section-number">6.3.2</span> October — dataset at scale + first baseline (epics B2, C2)</a></li>
+  <li><a href="#november-gr00t-full-evaluation-epics-c1-c3" id="toc-november-gr00t-full-evaluation-epics-c1-c3" class="nav-link" data-scroll-target="#november-gr00t-full-evaluation-epics-c1-c3"><span class="header-section-number">6.3.3</span> November — GR00T + full evaluation (epics C1, C3)</a></li>
+  <li><a href="#december-finish-freeze-outline-epics-c3-d" id="toc-december-finish-freeze-outline-epics-c3-d" class="nav-link" data-scroll-target="#december-finish-freeze-outline-epics-c3-d"><span class="header-section-number">6.3.4</span> December — finish, freeze, outline (epics C3, D)</a></li>
+  <li><a href="#januarymarch-2027" id="toc-januarymarch-2027" class="nav-link" data-scroll-target="#januarymarch-2027"><span class="header-section-number">6.3.5</span> January–March 2027</a></li>
+  </ul></li>
+  <li><a href="#quantifiables-what-gets-measured-and-reported" id="toc-quantifiables-what-gets-measured-and-reported" class="nav-link" data-scroll-target="#quantifiables-what-gets-measured-and-reported"><span class="header-section-number">6.4</span> Quantifiables — what gets measured and reported</a>
+  <ul class="collapse">
+  <li><a href="#decision-thresholds-what-achieved-means" id="toc-decision-thresholds-what-achieved-means" class="nav-link" data-scroll-target="#decision-thresholds-what-achieved-means"><span class="header-section-number">6.4.1</span> Decision thresholds — what “achieved” means</a></li>
+  <li><a href="#primary-metrics-every-policy-every-task" id="toc-primary-metrics-every-policy-every-task" class="nav-link" data-scroll-target="#primary-metrics-every-policy-every-task"><span class="header-section-number">6.4.2</span> Primary metrics (every policy, every task)</a></li>
+  <li><a href="#secondary-metrics" id="toc-secondary-metrics" class="nav-link" data-scroll-target="#secondary-metrics"><span class="header-section-number">6.4.3</span> Secondary metrics</a></li>
+  <li><a href="#generalization-tiers-rq2" id="toc-generalization-tiers-rq2" class="nav-link" data-scroll-target="#generalization-tiers-rq2"><span class="header-section-number">6.4.4</span> Generalization tiers (RQ2)</a></li>
+  <li><a href="#failure-taxonomy" id="toc-failure-taxonomy" class="nav-link" data-scroll-target="#failure-taxonomy"><span class="header-section-number">6.4.5</span> Failure taxonomy</a></li>
+  <li><a href="#practicality-cost-sheet-rq3" id="toc-practicality-cost-sheet-rq3" class="nav-link" data-scroll-target="#practicality-cost-sheet-rq3"><span class="header-section-number">6.4.6</span> Practicality cost sheet (RQ3)</a></li>
+  <li><a href="#deliverables-checklist-results-chapter" id="toc-deliverables-checklist-results-chapter" class="nav-link" data-scroll-target="#deliverables-checklist-results-chapter"><span class="header-section-number">6.4.7</span> Deliverables checklist (results chapter)</a></li>
+  </ul></li>
+  <li><a href="#literature-map" id="toc-literature-map" class="nav-link" data-scroll-target="#literature-map"><span class="header-section-number">6.5</span> Literature map</a></li>
+  <li><a href="#open-source-stack" id="toc-open-source-stack" class="nav-link" data-scroll-target="#open-source-stack"><span class="header-section-number">6.6</span> Open-source stack</a></li>
+  <li><a href="#using-ai-research-assistants" id="toc-using-ai-research-assistants" class="nav-link" data-scroll-target="#using-ai-research-assistants"><span class="header-section-number">6.7</span> Using AI research assistants</a></li>
+  <li><a href="#risk-register" id="toc-risk-register" class="nav-link" data-scroll-target="#risk-register"><span class="header-section-number">6.8</span> Risk register</a></li>
+  <li><a href="#cadence" id="toc-cadence" class="nav-link" data-scroll-target="#cadence"><span class="header-section-number">6.9</span> Cadence</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/roadmap-fall-2026.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fall 2026 Roadmap — experiments to December</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fall 2026 Roadmap — experiments to December</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 25, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Working plan from today (Aug 25) to the results freeze in December. The <a href="../../index.html">top-level Gantt</a> is the source of truth for dates; this page holds the reasoning behind them: research questions, week-level milestones, the quantifiables spec (metrics, generalization tiers, failure taxonomy), the literature map, the open-source stack, and how AI research assistants are used. Revise it whenever the plan changes — it becomes the skeleton of the Methods chapter and the defense timeline slide.</p>
+<section id="research-questions" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="research-questions"><span class="header-section-number">6.1</span> Research questions</h2>
+<p>The thesis claim is built around three questions. Every experiment should answer one of them; anything that doesn’t is scope creep.</p>
+<p><strong>RQ1 — Adaptation.</strong> Can current open vision-language-action (VLA) foundation models (NVIDIA GR00T N1.5, SmolVLA, optionally π0) be adapted to a <em>new embodiment</em> — the OARbot (Clearpath Dingo omni base + Kinova Jaco Gen2 6-DOF arm) — with a modest demonstration dataset collected in the lab?</p>
+<p><strong>RQ2 — Comparison &amp; generalization.</strong> On a fixed task suite, how do the fine-tuned VLAs compare against each other <em>and against a from-scratch imitation baseline (ACT) trained only on our demonstrations</em> — both on in-distribution success rate and on how gracefully performance degrades across generalization tiers (unseen poses, distractors, novel object instances, paraphrased instructions)? The baseline is what makes generalization attributable: if the VLAs degrade less than ACT out of distribution, that gap <em>is</em> the measured value of internet-scale pretraining.</p>
+<p><strong>RQ3 — Practicality.</strong> What are the real compute and data costs — fine-tuning wall-clock on a DGX Spark, demos-per-task needed, on-robot inference rates — and what does that imply for small-lab replication?</p>
+<p>RQ3 is the differentiator: most VLA papers report results on the authors’ hardware fleet; a careful account of what it takes to adapt these models on one robot with two lab machines is a genuine contribution.</p>
+</section>
+<section id="compute-and-platform-allocation" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="compute-and-platform-allocation"><span class="header-section-number">6.2</span> Compute and platform allocation</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Machine</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DGX Spark (GB10, 128 GB unified memory)</td>
+<td>All fine-tuning: GR00T N1.5 (NVIDIA ships a DGX Spark fine-tuning playbook for it), SmolVLA full fine-tune, π0 LoRA if attempted</td>
+</tr>
+<tr class="even">
+<td>RTX workstation (“7080” — confirm exact model, likely RTX 5080)</td>
+<td>Robot-side: teleop, data recording, policy inference at eval time, dataset visualization</td>
+</tr>
+<tr class="odd">
+<td>OARbot helper laptop + Dingo onboard PC</td>
+<td>ROS 2 Jazzy stack, drivers, cameras (per the <a href="https://rpirobotics.github.io/oarbots/docs/getting-started/hardware-overview">OARbot docs</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Keep training and robot operation on separate machines from day one so data collection never competes with training runs.</p>
+</section>
+<section id="month-by-month-plan" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="month-by-month-plan"><span class="header-section-number">6.3</span> Month-by-month plan</h2>
+<section id="september-bring-up-task-suite-literature-epics-b1-a2-a1" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="september-bring-up-task-suite-literature-epics-b1-a2-a1"><span class="header-section-number">6.3.1</span> September — bring-up, task suite, literature (epics B1, A2, A1)</h3>
+<ul>
+<li><strong>Week of Sep 1:</strong> Full teleop chain on one OARbot: drive the base, command the arm (SpaceMouse), stream both Azure Kinects. Verify E-stop and deadman behavior. Note which sensors are actually usable (docs already flag the UWB units as inoperable).</li>
+<li><strong>Week of Sep 8:</strong> Record demonstrations into <strong>LeRobotDataset format</strong> — joint states + base velocity + camera frames, replay a recorded episode open-loop on the robot to prove the pipeline is lossless. This replay test is the single most important de-risking step of the semester.</li>
+<li><strong>Week of Sep 15:</strong> Freeze the <strong>task suite</strong> (epic A2): 3 tasks in increasing difficulty, e.g.&nbsp;(T1) tabletop pick-and-place, arm only; (T2) fetch — navigate to a table, grasp, return; (T3) a true mobile-manipulation task with base+arm coordination (open a door, clear a table). Define per-task success criteria, the staged <strong>progress rubric</strong> (reach / grasp / transport / place), the in-distribution randomization grid, and the <strong>generalization tiers G1–G4</strong> (see the quantifiables spec below) <em>before</em> collecting data. Confirm the suite with the advisor. Also start the <strong>action-space decision log</strong>: every embodiment-design choice (joint deltas vs.&nbsp;absolutes, base twist representation, chunk length, control rates, normalization) gets a dated entry with the reasoning — this log becomes the Methods section on adapting VLA action heads to a mobile manipulator.</li>
+<li><strong>Week of Sep 22:</strong> Pilot data collection: ~10 episodes per task, train a quick SmolVLA sanity run on T1, fix whatever breaks.</li>
+<li><strong>Gate 1 (Sep 26):</strong> teleop + record + replay all work, task suite signed off. <em>Fallback if late: drop T3 base motion and run an arm-centric thesis — decide here, not in November.</em></li>
+</ul>
+</section>
+<section id="october-dataset-at-scale-first-baseline-epics-b2-c2" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="october-dataset-at-scale-first-baseline-epics-b2-c2"><span class="header-section-number">6.3.2</span> October — dataset at scale + first baseline (epics B2, C2)</h3>
+<ul>
+<li><strong>Weeks of Oct 5 / Oct 12:</strong> Main collection push, target <strong>50–100 episodes per task</strong> (ACT/SmolVLA-class results are routinely reported around 50 demos/task; more helps T3). Interleave tasks and vary object poses per the randomization grid. Nightly QC script: episode counts, joint-limit outliers, dropped frames.</li>
+<li><strong>Week of Oct 19:</strong> SmolVLA fine-tuned per-task on the Spark, and <strong>ACT trained from scratch on the identical data</strong> — it trains in hours and rides along on the same LeRobot dataset, giving the no-pretraining reference point for RQ2. First closed-loop rollouts on the robot.</li>
+<li><strong>Week of Oct 26:</strong> Start GR00T N1.5 fine-tuning (epic C1) — the new-embodiment head needs the most debugging lead time. First structured mini-eval (10 trials/task) of SmolVLA.</li>
+<li><strong>Gate 2 (Oct 31):</strong> SmolVLA achieves non-zero success on T1 with a documented eval protocol. <em>If zero: freeze collection, debug the data/normalization/camera pipeline first — more bad data won’t help.</em></li>
+</ul>
+</section>
+<section id="november-gr00t-full-evaluation-epics-c1-c3" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="november-gr00t-full-evaluation-epics-c1-c3"><span class="header-section-number">6.3.3</span> November — GR00T + full evaluation (epics C1, C3)</h3>
+<ul>
+<li><strong>Weeks of Nov 2 / Nov 9:</strong> GR00T N1.5 tuned across tasks; top-up data collection where QC shows gaps; π0 (LoRA via LeRobot/openpi) only if both main models are stable.</li>
+<li><strong>Week of Nov 16:</strong> Full evaluation begins (epic C3): <strong>≥20 trials/task/policy</strong> on the shared in-distribution grid, everything in the quantifiables spec logged per trial, video of every trial. Budget realistically — 3 tasks × 4 policies (ACT, SmolVLA, GR00T, π0-if-attempted) × 20 trials at ~3 min/trial is ~12 robot-hours <em>per full round</em>, plus resets.</li>
+<li><strong>Gate 3 (Nov 27):</strong> Decide final comparison set (ACT + 2 or 3 VLAs) and confirm the <strong>data-scale ablation</strong> (retrain at 25/50/100 demos on one task) fits the calendar.</li>
+</ul>
+</section>
+<section id="december-finish-freeze-outline-epics-c3-d" class="level3" data-number="6.3.4">
+<h3 data-number="6.3.4" class="anchored" data-anchor-id="december-finish-freeze-outline-epics-c3-d"><span class="header-section-number">6.3.4</span> December — finish, freeze, outline (epics C3, D)</h3>
+<ul>
+<li><strong>Weeks of Dec 1 / Dec 7:</strong> Complete in-distribution eval rounds + data-scale ablation; <strong>generalization round</strong> — tiers G1–G4 on each model’s best checkpoint only (10 trials/tier, see quantifiables spec).</li>
+<li><strong>Week of Dec 14:</strong> Re-runs and holes only. <strong>Results freeze Dec 18</strong> — after this date, no new experiments, only analysis.</li>
+<li><strong>Week of Dec 21:</strong> All results tables and figures generated by script from logged data; chapter outline drafted in <code>chapters/</code>.</li>
+</ul>
+</section>
+<section id="januarymarch-2027" class="level3" data-number="6.3.5">
+<h3 data-number="6.3.5" class="anchored" data-anchor-id="januarymarch-2027"><span class="header-section-number">6.3.5</span> January–March 2027</h3>
+<p>Chapter drafts Jan 4 – Feb 26 (Background and Methods first — most of Methods should fall out of this page and the epic READMEs), full draft to advisor end of February, defense mid-March (confirm the exact date and committee logistics with the advisor <strong>in September</strong>, not January).</p>
+</section>
+</section>
+<section id="quantifiables-what-gets-measured-and-reported" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="quantifiables-what-gets-measured-and-reported"><span class="header-section-number">6.4</span> Quantifiables — what gets measured and reported</h2>
+<p>What the results chapter must contain, modeled on what this class of papers (ACT, Diffusion Policy, OpenVLA, π0, SmolVLA, GR00T, Mobile ALOHA) actually reports. Frozen in epic A2 before data collection; every eval trial logs a row with all of these fields plus a video path.</p>
+<section id="decision-thresholds-what-achieved-means" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="decision-thresholds-what-achieved-means"><span class="header-section-number">6.4.1</span> Decision thresholds — what “achieved” means</h3>
+<p>Targets are pre-registered thresholds, not promises. A miss, analyzed honestly, is still a result.</p>
+<ul>
+<li><strong>Platform validated:</strong> ≥1 policy reaches <strong>≥70% success on T1</strong> in-distribution.</li>
+<li><strong>Pretraining transfer confirmed:</strong> the VLAs beat from-scratch ACT on the generalization tiers by <strong>≥15 percentage points</strong> average. A null or negative gap = “pretraining did not pay off at this data scale on this embodiment” — a publishable negative result.</li>
+<li><strong>Practicality documented:</strong> complete cost sheet (below) for every model, no gaps.</li>
+</ul>
+</section>
+<section id="primary-metrics-every-policy-every-task" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="primary-metrics-every-policy-every-task"><span class="header-section-number">6.4.2</span> Primary metrics (every policy, every task)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Definition</th>
+<th>Reported as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Success rate</td>
+<td>Binary per trial against the frozen rubric; human intervention = failure</td>
+<td>% with 95% Wilson CI, n ≥ 20</td>
+</tr>
+<tr class="even">
+<td>Progress score</td>
+<td>Staged credit: reach 0.25 / grasp 0.5 / transport 0.75 / place 1.0 (per-task rubric)</td>
+<td>Mean 0–1; separates “never grasps” from “drops at the end” when success rates are low</td>
+</tr>
+<tr class="odd">
+<td>Time to completion</td>
+<td>Successful trials only, start signal → success condition</td>
+<td>Median [IQR] seconds</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="secondary-metrics" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="secondary-metrics"><span class="header-section-number">6.4.3</span> Secondary metrics</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Definition</th>
+<th>Reported as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inference latency</td>
+<td>Camera frame in → action chunk out, on the RTX workstation</td>
+<td>ms per chunk + achieved control rate (Hz)</td>
+</tr>
+<tr class="even">
+<td>Generalization gap</td>
+<td>In-distribution success minus per-tier success</td>
+<td>Percentage points, per tier per policy</td>
+</tr>
+<tr class="odd">
+<td>Data efficiency</td>
+<td>Success rate at 25 / 50 / 100 training demos (one task, all policies)</td>
+<td>Curve — the small-lab money figure</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generalization-tiers-rq2" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="generalization-tiers-rq2"><span class="header-section-number">6.4.4</span> Generalization tiers (RQ2)</h3>
+<p>Evaluated on each model’s <strong>best checkpoint only</strong>, 10 trials/tier, selection rules frozen in A2:</p>
+<ul>
+<li><strong>G0</strong> — in-distribution: objects and poses from the training grid.</li>
+<li><strong>G1 — spatial:</strong> object poses outside the training grid.</li>
+<li><strong>G2 — visual:</strong> distractor objects + lighting change.</li>
+<li><strong>G3 — object:</strong> novel instance of the same category (different mug, different box).</li>
+<li><strong>G4 — language:</strong> paraphrased instruction, same task (“pick up the cup” → “grab the mug”). VLA-only tier — ACT has no language input, which is itself part of the comparison story.</li>
+</ul>
+</section>
+<section id="failure-taxonomy" class="level3" data-number="6.4.5">
+<h3 data-number="6.4.5" class="anchored" data-anchor-id="failure-taxonomy"><span class="header-section-number">6.4.5</span> Failure taxonomy</h3>
+<p>Every failed trial gets a <strong>first-failure label</strong> from this closed list, logged at eval time (10 seconds of effort) with the video path:</p>
+<p><code>perception/grounding</code> (approached wrong object) · <code>navigation/base-pose</code> (stopped out of reach) · <code>grasp</code> (contact but slip/miss) · <code>manipulation-trajectory</code> (jerky/unsafe motion, joint limit) · <code>instruction</code> (did the wrong task) · <code>stall/timeout</code> · <code>hardware</code> (excluded and retried, not counted).</p>
+<p>Rendered as stacked bars per policy × task — this figure explains <em>why</em> the success rates differ and is the backbone of the analysis chapter.</p>
+</section>
+<section id="practicality-cost-sheet-rq3" class="level3" data-number="6.4.6">
+<h3 data-number="6.4.6" class="anchored" data-anchor-id="practicality-cost-sheet-rq3"><span class="header-section-number">6.4.6</span> Practicality cost sheet (RQ3)</h3>
+<p>Per model: fine-tuning wall-clock hours and peak memory on the DGX Spark, trainable parameter count (LoRA vs.&nbsp;full), GPU-hours per training run, on-robot inference hardware requirements. Plus data cost: minutes per collected episode, total collection hours, retake rate.</p>
+</section>
+<section id="deliverables-checklist-results-chapter" class="level3" data-number="6.4.7">
+<h3 data-number="6.4.7" class="anchored" data-anchor-id="deliverables-checklist-results-chapter"><span class="header-section-number">6.4.7</span> Deliverables checklist (results chapter)</h3>
+<ul>
+<li><strong>T1</strong> Main results: success ± CI, task × policy, in-distribution</li>
+<li><strong>T2</strong> Generalization matrix: policy × tier</li>
+<li><strong>T3</strong> Efficiency: latency, control rate, completion time</li>
+<li><strong>T4</strong> Cost sheet (RQ3)</li>
+<li><strong>F1</strong> Data-scale curve · <strong>F2</strong> Failure-mode stacked bars · <strong>F3</strong> Qualitative rollout film-strips (best + worst per policy)</li>
+</ul>
+<p>Protocol hygiene: the randomization grid and rubrics are frozen before collection; checkpoint selection criteria defined before eval; all runs reported (no cherry-picked seeds); every trial has video.</p>
+</section>
+</section>
+<section id="literature-map" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="literature-map"><span class="header-section-number">6.5</span> Literature map</h2>
+<p>Organized by the Background chapter’s likely sections. Maintain citations in Zotero and export to <code>references.bib</code> (keep BibTeX keys stable). Verify every reference on arXiv/Semantic Scholar before it enters the bib file — never cite from an LLM’s memory.</p>
+<p><strong>1. Learning from demonstration — foundations</strong></p>
+<ul>
+<li>Argall, Chernova, Veloso, Browning (2009), <em>A survey of robot learning from demonstration</em> — the canonical survey to anchor the chapter.</li>
+<li>Pomerleau (1988), ALVINN — behavioral cloning origin.</li>
+<li>Ross, Gordon, Bagnell (2011), DAgger — compounding-error argument every IL thesis needs.</li>
+</ul>
+<p><strong>2. Modern imitation learning architectures</strong></p>
+<ul>
+<li>Zhao et al.&nbsp;(RSS 2023), ACT / ALOHA — action chunking; the direct ancestor of today’s VLA action heads.</li>
+<li>Chi et al.&nbsp;(RSS 2023), Diffusion Policy — generative action heads.</li>
+<li>Lipman et al.&nbsp;(ICLR 2023), Flow Matching — theory behind π0-style and GR00T-style flow action heads.</li>
+<li>Fu, Zhao, Finn (2024), Mobile ALOHA — the closest published setup to this thesis: whole-body IL on a mobile manipulator.</li>
+</ul>
+<p><strong>3. Vision-language-action models</strong></p>
+<ul>
+<li>Brohan et al., RT-1 (2022) and RT-2 (2023) — the VLA lineage.</li>
+<li>Open X-Embodiment collaboration (2023/24) — cross-embodiment pretraining; why adapting a generalist to OARbot is plausible at all.</li>
+<li>Octo Model Team (2024) — open generalist policy.</li>
+<li>Kim et al.&nbsp;(2024), OpenVLA — open 7B VLA + fine-tuning recipes (see also the OpenVLA-OFT follow-up on efficient fine-tuning).</li>
+<li>Black et al.&nbsp;(2024), π0; Physical Intelligence (2025), π0.5 — flow matching VLA, open weights via openpi.</li>
+<li>Hugging Face (2025), SmolVLA — small (~450M) VLA designed for exactly this compute class; likely the workhorse baseline.</li>
+<li>NVIDIA (2025), GR00T N1 paper (+ N1.5 release notes) — the primary model; its dual-system architecture and new-embodiment fine-tuning story are directly load-bearing.</li>
+<li>Google DeepMind (2025), Gemini Robotics — closed, but frames the state of the art in Background.</li>
+</ul>
+<p><strong>4. Mobile manipulation and assistive context</strong></p>
+<ul>
+<li>TidyBot (2023), HomeRobot/OVMM (2023), BEHAVIOR-1K (2023) — mobile-manipulation task framing and benchmarks.</li>
+<li>RPI’s own OARbot publications — get the list from the advisor; the assistive-robotics motivation should cite the lab’s line of work.</li>
+</ul>
+<p><strong>5. Datasets and evaluation methodology</strong></p>
+<ul>
+<li>DROID (2024), BridgeData V2 (2023), AgiBot World (2025) — large-scale teleop dataset practice worth imitating at small scale.</li>
+<li>LIBERO (2023) — task-suite design and eval discipline.</li>
+<li>SimplerEnv — Li et al.&nbsp;(2024), <em>Evaluating Real-World Robot Manipulation Policies in Simulation</em> — the real-vs-sim eval gap.</li>
+<li>Recent work on statistically sound robot policy evaluation (trial counts, confidence intervals, A/B protocols) — good target for a deep-research sweep, see below.</li>
+</ul>
+</section>
+<section id="open-source-stack" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="open-source-stack"><span class="header-section-number">6.6</span> Open-source stack</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Use here</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://github.com/huggingface/lerobot">LeRobot</a></td>
+<td>Dataset format, teleop recording, SmolVLA + π0 (PyTorch) training/eval — the backbone of B2/C2</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/NVIDIA/Isaac-GR00T">Isaac GR00T</a></td>
+<td>GR00T N1.5 checkpoints + new-embodiment fine-tuning scripts; check NVIDIA’s DGX Spark playbook</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/Physical-Intelligence/openpi">openpi</a></td>
+<td>π0/π0.5 reference implementation (JAX) if the LeRobot port falls short</td>
+</tr>
+<tr class="even">
+<td><a href="https://github.com/rpirobotics/oarbots">oarbots repo</a></td>
+<td>Lab’s ROS 2 stack, drivers, teleop — extend, don’t rewrite</td>
+</tr>
+<tr class="odd">
+<td>Hugging Face Hub</td>
+<td>Host the OARbot demonstration dataset (private repo) + fine-tuned checkpoints; free provenance and versioning</td>
+</tr>
+<tr class="even">
+<td>Weights &amp; Biases (or TensorBoard)</td>
+<td>Training curves + eval run tracking, linked from weekly updates</td>
+</tr>
+<tr class="odd">
+<td>Zotero → <code>references.bib</code></td>
+<td>Single bibliography pipeline into Quarto</td>
+</tr>
+</tbody>
+</table>
+<p>Stretch only (explicitly out of scope unless everything lands early): Isaac Lab / SimplerEnv-style sim twin of a task for cheap eval — you have Isaac Sim experience from the SO-101 project, but a sim twin is a second thesis; park it in Future Work.</p>
+</section>
+<section id="using-ai-research-assistants" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="using-ai-research-assistants"><span class="header-section-number">6.7</span> Using AI research assistants</h2>
+<p>Division of labor — each tool where it is strongest:</p>
+<ul>
+<li><strong>Gemini Deep Research</strong> — breadth: one report per Background section above (“annotated bibliography of VLA fine-tuning on novel embodiments 2023–2026, with arXiv links”). Also the eval-methodology sweep in §5.</li>
+<li><strong>ChatGPT (deep research)</strong> — cross-check Gemini’s reports; protocol questions (“how many trials for a detectable 15-point success-rate difference between two policies?”).</li>
+<li><strong>NotebookLM</strong> — load the collected PDFs per chapter section; ask grounded cross-paper questions while writing Background.</li>
+<li><strong>Claude Code</strong> — everything in-repo: LeRobot/GR00T pipeline code, QC scripts, eval analysis, figures, Quarto chapter drafting, and keeping this PM surface honest.</li>
+</ul>
+<p>Standing rule: LLM output is a <em>lead</em>, never a <em>citation</em>. Every claim that survives into the thesis gets verified against the primary source, and every reference is checked on arXiv before entering <code>references.bib</code>.</p>
+</section>
+<section id="risk-register" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="risk-register"><span class="header-section-number">6.8</span> Risk register</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Risk</th>
+<th>Likelihood</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bring-up eats October (drivers, arm, cameras)</td>
+<td>High</td>
+<td>Gate 1 fallback: arm-only task suite, decided Sep 26</td>
+</tr>
+<tr class="even">
+<td>Demo data too little/noisy for T3</td>
+<td>Medium</td>
+<td>Tiered tasks — T1/T2 alone still answer RQ1–RQ3; data-scale ablation turns “not enough data” into a finding</td>
+</tr>
+<tr class="odd">
+<td>GR00T new-embodiment head underperforms</td>
+<td>Medium</td>
+<td>SmolVLA is the guaranteed baseline; a negative GR00T result, carefully analyzed, is still a thesis result</td>
+</tr>
+<tr class="even">
+<td>Eval time underestimated</td>
+<td>High</td>
+<td>Protocol fixed in Sept; ≥20 trials budgeted on the calendar, not squeezed in</td>
+</tr>
+<tr class="odd">
+<td>Generalization round balloons eval time</td>
+<td>Medium</td>
+<td>Tiers only on best checkpoints, 10 trials/tier; if squeezed, run G1–G4 on T1+T2 only</td>
+</tr>
+<tr class="even">
+<td>Two-robot temptation (multi-robot experiments)</td>
+<td>Medium</td>
+<td>One OARbot is the experiment platform; the second is spare parts / backup until the freeze</td>
+</tr>
+<tr class="odd">
+<td>Writing starts late</td>
+<td>Medium</td>
+<td>Section D outline bar in December; Methods accretes from epic READMEs all semester</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cadence" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="cadence"><span class="header-section-number">6.9</span> Cadence</h2>
+<p>Weekly update (<code>.\thesis.ps1 new wu</code>) every Friday: progress, frozen Gantt snapshot, blockers, questions for advisor. The board and Gantt on the <a href="../../index.html">home page</a> stay the single source of truth — no parallel tracker (Notion/Trello) gets created.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/pd05849\.github\.io\/MS-Thesis\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../chapters/03-operation/index.html" class="pagination-link" aria-label="Operations">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Operations</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" class="pagination-link" aria-label="SOP-01: Example procedure">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
