@@ -25,28 +25,30 @@ a new epic (`.\thesis.ps1 new epic …`).
 
 ```{mermaid}
 gantt
-    title Thesis schedule — LfD for OARbot control (dates TODO: confirm with advisor)
+    title Thesis schedule — experiments to Dec 2026, writing Jan–Feb, defense Mar 2027
     dateFormat YYYY-MM-DD
     axisFormat %b
     tickInterval 1month
 
     section A. Foundations
-    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-08-15
-    Task suite & evaluation metrics           :        a2, 2026-08-01, 2026-09-01
+    Literature review (LfD, VLM/VLA, GR00T)   :active, a1, 2026-07-01, 2026-09-30
+    Task suite & evaluation metrics           :        a2, 2026-09-01, 2026-09-25
 
     section B. Platform & data
-    OARbot bring-up & teleoperation           :active, b1, 2026-07-15, 2026-09-15
-    Demonstration dataset collection          :        b2, 2026-09-01, 2026-11-15
+    OARbot bring-up & teleoperation           :active, b1, 2026-08-25, 2026-09-25
+    Demonstration dataset collection          :        b2, 2026-09-21, 2026-11-13
 
     section C. Policy learning
-    GR00T fine-tuning on OARbot               :        c1, 2026-10-01, 2026-12-15
-    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-11-01, 2027-01-15
-    Evaluation on complex tasks               :        c3, 2027-01-04, 2027-02-28
+    HF VLA baselines (SmolVLA / pi0)          :        c2, 2026-10-05, 2026-11-20
+    GR00T fine-tuning on OARbot               :        c1, 2026-10-26, 2026-12-11
+    Evaluation on complex tasks               :crit,   c3, 2026-11-16, 2026-12-18
+    Results freeze                            :milestone, m1, 2026-12-18, 1d
 
     section D. Thesis writing
-    Chapter drafts                            :        d1, 2026-12-01, 2027-03-15
-    Thesis Draft Target Deadline              :milestone, d2, 2027-03-15, 1d
-    Thesis Submission Deadline                :milestone, d3, 2027-04-15, 1d
+    Outline + results figures                 :        d0, 2026-12-07, 2026-12-23
+    Chapter drafts                            :        d1, 2027-01-04, 2027-02-26
+    Full draft to advisor                     :milestone, d2, 2027-02-26, 1d
+    Defense (exact date TBC with advisor)     :milestone, d3, 2027-03-15, 1d
 ```
 
 ## Initiative board

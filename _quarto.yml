@@ -50,6 +50,7 @@ book:
     - part: "Operations"
       chapters:
         - chapters/03-operation/index.qmd
+        - chapters/03-operation/roadmap-fall-2026.qmd
         - chapters/03-operation/sops/SOP-01-example-procedure.qmd
     - chapters/CH-04-future-work.qmd
   appendices:
