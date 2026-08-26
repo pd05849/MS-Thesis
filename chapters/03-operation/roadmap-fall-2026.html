@@ -318,11 +318,11 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>RTX workstation (“7080” — confirm exact model, likely RTX 5080)</td>
-<td>Robot-side: teleop, data recording, policy inference at eval time, dataset visualization</td>
+<td>Policy inference at eval time (joins the robot’s ROS 2 graph over the network), dataset QC and visualization</td>
 </tr>
 <tr class="odd">
-<td>OARbot helper laptop + Dingo onboard PC</td>
-<td>ROS 2 Jazzy stack, drivers, cameras (per the <a href="https://rpirobotics.github.io/oarbots/docs/getting-started/hardware-overview">OARbot docs</a>)</td>
+<td>OARbot’s own computers</td>
+<td>Teleop and demo recording happen here, not on the RTX box: Surface Go 2 tablet + SpaceMouse/deadman/E-stop is the operator interface; the <strong>helper laptop</strong> is the hub that drives the Kinova arm (USB-B) and runs the device nodes; the Dingo onboard PC runs the ROS 2 Jazzy base; the NUC handles overhead-camera pose estimation (per the <a href="https://rpirobotics.github.io/oarbots/docs/getting-started/hardware-overview">OARbot docs</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -335,10 +335,29 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Week of Sep 1:</strong> Full teleop chain on one OARbot: drive the base, command the arm (SpaceMouse), stream both Azure Kinects. Verify E-stop and deadman behavior. Note which sensors are actually usable (docs already flag the UWB units as inoperable).</li>
 <li><strong>Week of Sep 8:</strong> Record demonstrations into <strong>LeRobotDataset format</strong> — joint states + base velocity + camera frames, replay a recorded episode open-loop on the robot to prove the pipeline is lossless. This replay test is the single most important de-risking step of the semester.</li>
-<li><strong>Week of Sep 15:</strong> Freeze the <strong>task suite</strong> (epic A2): 3 tasks in increasing difficulty, e.g.&nbsp;(T1) tabletop pick-and-place, arm only; (T2) fetch — navigate to a table, grasp, return; (T3) a true mobile-manipulation task with base+arm coordination (open a door, clear a table). Define per-task success criteria, the staged <strong>progress rubric</strong> (reach / grasp / transport / place), the in-distribution randomization grid, and the <strong>generalization tiers G1–G4</strong> (see the quantifiables spec below) <em>before</em> collecting data. Confirm the suite with the advisor. Also start the <strong>action-space decision log</strong>: every embodiment-design choice (joint deltas vs.&nbsp;absolutes, base twist representation, chunk length, control rates, normalization) gets a dated entry with the reasoning — this log becomes the Methods section on adapting VLA action heads to a mobile manipulator.</li>
+<li><strong>Week of Sep 15:</strong> Freeze the <strong>task suite</strong> (epic A2): 3 tasks in increasing difficulty, e.g.&nbsp;(T1) tabletop pick-and-place, arm only; (T2) fetch — navigate to a table, grasp, return; (T3) a true mobile-manipulation task with base+arm coordination (open a door, clear a table). Scope grows in that order <strong>by design</strong>: start arm-only with the base parked, expand only once T1 works. Even so, freeze the full 10-D action/state schema (6 arm + 3 base + gripper) from the first recorded episode — base dims logged as zeros while parked — so widening scope later means new data, never a pipeline rewrite. Define per-task success criteria, the staged <strong>progress rubric</strong> (reach / grasp / transport / place), the in-distribution randomization grid, and the <strong>generalization tiers G1–G4</strong> (see the quantifiables spec below) <em>before</em> collecting data. Confirm the suite with the advisor. Also start the <strong>action-space decision log</strong>: every embodiment-design choice (joint deltas vs.&nbsp;absolutes, base twist representation, chunk length, control rates, normalization) gets a dated entry with the reasoning — this log becomes the Methods section on adapting VLA action heads to a mobile manipulator.</li>
 <li><strong>Week of Sep 22:</strong> Pilot data collection: ~10 episodes per task, train a quick SmolVLA sanity run on T1, fix whatever breaks.</li>
 <li><strong>Gate 1 (Sep 26):</strong> teleop + record + replay all work, task suite signed off. <em>Fallback if late: drop T3 base motion and run an arm-centric thesis — decide here, not in November.</em></li>
 </ul>
+<section id="data-pipeline-decisions-locked-2026-08-25" class="level4" data-number="6.3.1.1">
+<h4 data-number="6.3.1.1" class="anchored" data-anchor-id="data-pipeline-decisions-locked-2026-08-25"><span class="header-section-number">6.3.1.1</span> Data-pipeline decisions (locked 2026-08-25)</h4>
+<ul>
+<li>Teleop is <strong>Cartesian</strong> (SpaceMouse → EE twist → Kinova IK); training actions are <strong>joint positions</strong> derived from achieved states: action(t) = joint angles at t+Δ. Teleop space and training space are decoupled by this labeling — the raw SpaceMouse commands are never used as labels.</li>
+<li>Recording = <code>ros2 bag record</code> on the <strong>helper laptop</strong> (compressed image topics, one auto-numbered bag per episode), then an offline <strong>bag → LeRobotDataset converter</strong>: uniform rate, nearest-frame alignment, the frozen 10-D schema, t+Δ action labels, instruction string per episode. Raw bags are kept forever as source of truth — every labeling choice stays reversible without re-collection.</li>
+<li><strong>Wrist camera mounted before any kept demos</strong> — observations are locked in at recording time; actions can be re-derived, images cannot.</li>
+</ul>
+</section>
+<section id="week-1-verification-checklist-at-the-robot" class="level4" data-number="6.3.1.2">
+<h4 data-number="6.3.1.2" class="anchored" data-anchor-id="week-1-verification-checklist-at-the-robot"><span class="header-section-number">6.3.1.2</span> Week-1 verification checklist (at the robot)</h4>
+<ol type="1">
+<li><code>ros2 topic list</code> + <code>ros2 topic hz</code> during teleop: arm JointState topic (finger joints included?), camera topics, <code>/odom</code>, raw teleop command topic if exposed. Note exact names and rates.</li>
+<li><strong>Angular control</strong> — does the lab stack expose joint position/velocity <em>streaming</em> to the Gen2? Teleop only proves the Cartesian path; policies need the joint path. Biggest unknown on the platform.</li>
+<li>Gripper commands land on a ROS topic and appear in recordings.</li>
+<li>Round-trip latency: camera → RTX box → command back to the helper laptop (decides wireless inference viability; chunk ≈ 3× latency).</li>
+<li>Clock sync (chrony) across Dingo PC / helper laptop / NUC / RTX box — required for correct chunk alignment at deployment.</li>
+<li>End-to-end proof: record one episode → convert → <strong>replay</strong> it on the arm via angular control.</li>
+</ol>
+</section>
 </section>
 <section id="october-dataset-at-scale-first-baseline-epics-b2-c2" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="october-dataset-at-scale-first-baseline-epics-b2-c2"><span class="header-section-number">6.3.2</span> October — dataset at scale + first baseline (epics B2, C2)</h3>
