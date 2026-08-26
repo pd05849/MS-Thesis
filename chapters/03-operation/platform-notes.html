@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-08-26">
 
-<title>2&nbsp; Background – Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control</title>
+<title>7&nbsp; OARbot platform notes — findings &amp; day-1 checklist – Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/01-background/CH-1a-example-section.html" rel="next">
-<link href="../../index.html" rel="prev">
+<link href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" rel="next">
+<link href="../../chapters/03-operation/roadmap-fall-2026.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/01-background/index.html">Background</a></li><li class="breadcrumb-item"><a href="../../chapters/01-background/index.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/platform-notes.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OARbot platform notes — findings &amp; day-1 checklist</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -127,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/01-background/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../chapters/01-background/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></span></a>
   </div>
 </li>
@@ -179,7 +180,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/03-operation/platform-notes.html" class="sidebar-item-text sidebar-link">
+  <a href="../../chapters/03-operation/platform-notes.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OARbot platform notes — findings &amp; day-1 checklist</span></span></a>
   </div>
 </li>
@@ -237,15 +238,29 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#findings-how-the-oarbot-communicates" id="toc-findings-how-the-oarbot-communicates" class="nav-link active" data-scroll-target="#findings-how-the-oarbot-communicates"><span class="header-section-number">7.1</span> Findings — how the OARbot communicates</a>
+  <ul class="collapse">
+  <li><a href="#network-and-middleware" id="toc-network-and-middleware" class="nav-link" data-scroll-target="#network-and-middleware"><span class="header-section-number">7.1.1</span> Network and middleware</a></li>
+  <li><a href="#hardware-per-robot" id="toc-hardware-per-robot" class="nav-link" data-scroll-target="#hardware-per-robot"><span class="header-section-number">7.1.2</span> Hardware (per robot)</a></li>
+  <li><a href="#the-arm-interface-kinova-ros2" id="toc-the-arm-interface-kinova-ros2" class="nav-link" data-scroll-target="#the-arm-interface-kinova-ros2"><span class="header-section-number">7.1.3</span> The arm interface (kinova-ros2)</a></li>
+  <li><a href="#control-rate-design-why-the-policy-loop-is-10-hz" id="toc-control-rate-design-why-the-policy-loop-is-10-hz" class="nav-link" data-scroll-target="#control-rate-design-why-the-policy-loop-is-10-hz"><span class="header-section-number">7.1.4</span> Control-rate design (why the policy loop is ~10 Hz)</a></li>
+  <li><a href="#pipeline-decisions-locked-in-so-far" id="toc-pipeline-decisions-locked-in-so-far" class="nav-link" data-scroll-target="#pipeline-decisions-locked-in-so-far"><span class="header-section-number">7.1.5</span> Pipeline decisions locked in so far</a></li>
+  </ul></li>
+  <li><a href="#day-1-checklist-first-lab-session-aug-27" id="toc-day-1-checklist-first-lab-session-aug-27" class="nav-link" data-scroll-target="#day-1-checklist-first-lab-session-aug-27"><span class="header-section-number">7.2</span> Day-1 checklist — first lab session (Aug 27)</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/01-background/index.html">Background</a></li><li class="breadcrumb-item"><a href="../../chapters/01-background/index.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/platform-notes.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OARbot platform notes — findings &amp; day-1 checklist</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OARbot platform notes — findings &amp; day-1 checklist</span></h1>
 </div>
 
 
@@ -253,6 +268,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 26, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -262,11 +283,160 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<blockquote class="blockquote">
-<p>TODO: Part intro — why this research area matters and what question the thesis answers.</p>
-</blockquote>
+<p>Compressed findings from digesting the OARbot documentation (<a href="https://github.com/rpirobotics/oarbots">oarbots repo</a> · <a href="https://rpirobotics.github.io/oarbots/">docs site</a> · <a href="https://github.com/rpiRobotics/kinova-ros2">kinova-ros2</a>) before first contact with the robot, plus the reconnaissance checklist for the first lab session. Feeds epic <a href="../../initiatives/platform-data/epics/B1-oarbot-bringup-teleop/README.qmd">B1</a>; the reasoning behind the pipeline lives in the <a href="../../chapters/03-operation/roadmap-fall-2026.html">Fall 2026 roadmap</a>. Update this page as the topic dump and rate measurements replace assumptions with numbers.</p>
+<section id="findings-how-the-oarbot-communicates" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="findings-how-the-oarbot-communicates"><span class="header-section-number">7.1</span> Findings — how the OARbot communicates</h2>
+<section id="network-and-middleware" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="network-and-middleware"><span class="header-section-number">7.1.1</span> Network and middleware</h3>
+<ul>
+<li>ROS 2 <strong>Jazzy</strong> with <strong>CycloneDDS</strong> (<code>RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code>) on the lab Wi-Fi <code>CII8218-oarbots</code>. <em>Not</em> Fast DDS — keep this machine’s env separate from the Isaac Sim / SO-101 setup.</li>
+<li>Discovery is peer-to-peer (no master): any machine on the Wi-Fi with domain ID 0 sees everything. Connectivity check: <code>ros2 topic list</code>.</li>
+<li><strong>Domain layout:</strong> each robot runs internally in its own ROS domain — Blue = 2, Silver = 1 — and a <strong>domain bridge</strong> re-publishes both onto the shared domain 0 with <code>/oarbot_blue/…</code> and <code>/oarbot_silver/…</code> prefixes. The bridge is bidirectional: sensor streams out, commands in.</li>
+<li>Multi-network trouble → pin the interface in <code>~/.ros/cyclonedds.xml</code> and set <code>CYCLONEDDS_URI</code>.</li>
+</ul>
+</section>
+<section id="hardware-per-robot" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="hardware-per-robot"><span class="header-section-number">7.1.2</span> Hardware (per robot)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Base</td>
+<td>Clearpath Dingo DO-100, mecanum (omnidirectional), onboard PC runs its ROS nodes</td>
+</tr>
+<tr class="even">
+<td>Arm</td>
+<td>Kinova Jaco Gen2 6-DOF, 3-finger (<code>j2n6s300</code>), USB to helper laptop</td>
+</tr>
+<tr class="odd">
+<td>Helper laptop</td>
+<td>Lenovo ThinkPad on the base; runs <code>kinova_driver</code> + Kinect node, auto-launches at boot</td>
+</tr>
+<tr class="even">
+<td>Cameras</td>
+<td>Azure Kinect on each arm (RGB-D, 30 fps max); overhead Kinect on a NUC does ArUco pose estimation (Blue tag 0, Silver tag 4)</td>
+</tr>
+<tr class="odd">
+<td>F/T sensor</td>
+<td>Bota Rokubi Gen0 at the wrist — enables admittance (kinesthetic) mode</td>
+</tr>
+<tr class="even">
+<td>Teleop</td>
+<td>Surface Go 2 tablet: SpaceMouse Compact + deadman switch + E-stop; GUI via <code>tablet_launch.sh</code></td>
+</tr>
+<tr class="odd">
+<td>Inoperable</td>
+<td>UWB units (DecaWave MDEK1001) — ignore</td>
+</tr>
+</tbody>
+</table>
+<p>Boot order is strict (nodes fail to launch otherwise): batteries → Dingo → arm (hold home) → helper laptop → NUC (replug Kinect USB) → tablet → disengage E-stop → launch GUI.</p>
+</section>
+<section id="the-arm-interface-kinova-ros2" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="the-arm-interface-kinova-ros2"><span class="header-section-number">7.1.3</span> The arm interface (kinova-ros2)</h3>
+<p>Topic names below are the stock driver names; on the lab network they appear under the bridge prefix (exact names TBC from the topic dump).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Direction</th>
+<th>Topic</th>
+<th>Type / unit</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>out</td>
+<td><code>…driver/out/joint_state</code></td>
+<td><code>sensor_msgs/JointState</code>, <strong>rad</strong></td>
+<td>primary proprioception</td>
+</tr>
+<tr class="even">
+<td>out</td>
+<td><code>…driver/out/tool_pose</code></td>
+<td>end-effector pose</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>out</td>
+<td><code>…driver/out/tool_wrench</code></td>
+<td>wrist wrench</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>out</td>
+<td><code>…driver/out/finger_position</code></td>
+<td>finger state</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>in</td>
+<td><code>…driver/in/joint_velocity</code></td>
+<td><code>kinova_msgs/JointVelocity</code>, <strong>deg/s</strong></td>
+<td>must publish at exactly 100 Hz</td>
+</tr>
+<tr class="even">
+<td>in</td>
+<td><code>…driver/in/cartesian_velocity</code></td>
+<td><code>kinova_msgs/PoseVelocity</code></td>
+<td>same 100 Hz requirement</td>
+</tr>
+</tbody>
+</table>
+<p>Services: <code>home_arm</code>, <code>start</code>/<code>stop</code>, <code>start_force_control</code>/<code>stop_force_control</code> (the tablet’s admittance button), <code>set_zero_torques</code>. Actions: joint trajectory, pose goal, fingers (percent/mm/turns).</p>
+<p>Three load-bearing facts from the driver README:</p>
+<ol type="1">
+<li><strong>100 Hz is exact, not a minimum.</strong> The arm’s DSP loops every 10 ms; slower publishing fails to reach the commanded velocity, faster does nothing. Any policy or teleop source must run through a 100 Hz command repeater.</li>
+<li><strong>Publishing stops ⇒ motion stops.</strong> The velocity stream is a built-in deadman — killing the publisher halts the arm.</li>
+<li><strong>Unit trap:</strong> commands in deg/s, joint states in rad. Convert in exactly one place in the pipeline; log the choice in the action-space decision log.</li>
+</ol>
+</section>
+<section id="control-rate-design-why-the-policy-loop-is-10-hz" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="control-rate-design-why-the-policy-loop-is-10-hz"><span class="header-section-number">7.1.4</span> Control-rate design (why the policy loop is ~10 Hz)</h3>
+<p>Two decoupled rates, connected by action chunking: the <em>decision</em> loop (model inference) at ~10 Hz, the <em>command</em> stream at 100 Hz fed by a repeater executing the current action chunk. The decision rate is bounded by the camera (30 fps ceiling), model latency (ACT ~ms, but SmolVLA/GR00T/π0 are 50–200 ms per chunk on the RTX workstation), and end-to-end Wi-Fi latency. Published VLAs run 1–10 Hz re-planning with high-rate chunk execution (π0: 50 Hz chunks, ~2 Hz model calls). Achieved latency/control rate is an RQ3 metric — measured per model, not assumed.</p>
+</section>
+<section id="pipeline-decisions-locked-in-so-far" class="level3" data-number="7.1.5">
+<h3 data-number="7.1.5" class="anchored" data-anchor-id="pipeline-decisions-locked-in-so-far"><span class="header-section-number">7.1.5</span> Pipeline decisions locked in so far</h3>
+<ul>
+<li><strong>Bag-first recording:</strong> <code>ros2 bag record</code> (one bag per episode, keypress wrapper) is the recorder node — record generously (joints, RGB, depth, wrench, odom, both command topics, <code>/tf</code>, <code>camera_info</code>). Converter script resamples offline to a fixed policy-rate clock and emits LeRobotDataset; converter bugs cost a re-run, not a re-collection.</li>
+<li><strong>Action labels come from achieved states, not raw teleop</strong> (locked 2026-08-25): teleop stays Cartesian (SpaceMouse → EE twist → Kinova IK), while training actions are joint positions at t+Δ derived from the recorded joint states — teleop space and training space are decoupled. Details in the roadmap’s <a href="../../chapters/03-operation/roadmap-fall-2026.html">data-pipeline decisions</a>.</li>
+<li><strong>Replay test is rung 0 of the model ladder:</strong> republish a recorded episode’s commands at original timing; the arm must reproduce the demo before any learning starts. Ladder: replay → ACT → SmolVLA → GR00T N1.5 → (π0).</li>
+<li><strong>Inference node mirrors the recorder:</strong> same topics in, same preprocessing as training (normalization stats ship with the checkpoint), chunk execution + 100 Hz repeater out, keyboard deadman publishing zeros, human at the E-stop. Dry-run the plumbing with a dummy policy (zeros / replayed chunk) before the first trained model.</li>
+<li><strong>Admittance mode is a candidate second demo modality</strong> (kinesthetic guiding via the F/T sensor) — bake off against SpaceMouse teleop in the pilot week; docs warn calibration can be flaky, keep E-stop close.</li>
+</ul>
+</section>
+</section>
+<section id="day-1-checklist-first-lab-session-aug-27" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="day-1-checklist-first-lab-session-aug-27"><span class="header-section-number">7.2</span> Day-1 checklist — first lab session (Aug 27)</h2>
+<p>Everything read-only except step 7.</p>
+<ol type="1">
+<li><strong>Env sanity</strong> on the laptop: Jazzy sourced, <code>RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code>, domain 0, on the lab Wi-Fi.</li>
+<li><strong>Inventory dumps</strong> to files (keep them): <code>ros2 topic list</code>, <code>ros2 node list</code>, <code>ros2 service list</code>, <code>ros2 action list</code>.</li>
+<li><strong>Per key topic</strong> (joint states, RGB, depth, <code>camera_info</code>, wrench, odom, command topics): <code>ros2 topic info -v</code> (type + QoS), <code>ros2 topic hz</code> (real rate), <code>ros2 topic bw</code> (bandwidth); <code>ros2 topic echo --once</code> on <code>camera_info</code> for resolution.</li>
+<li><strong>Camera transport decision:</strong> look for <code>/compressed</code> siblings. Raw 720p RGB ≈ 80 MB/s (Wi-Fi drops frames silently); JPEG is a few MB/s. No compressed topic → <code>image_transport</code> republisher, or record on the helper laptop. The <code>bw</code> numbers decide where the recorder runs.</li>
+<li><strong>Identify command topics empirically:</strong> teleop with the SpaceMouse while watching <code>ros2 topic hz</code> on candidates — whatever the tablet publishes is the action interface.</li>
+<li><strong>Clock check:</strong> compare <code>header.stamp</code> against local clock; skew &gt; ~50 ms across machines → set up chrony before recording (camera ↔︎ joint sync is timestamp-based).</li>
+<li><strong>Command authority test</strong> (hand on E-stop): near-zero joint velocity from the laptop for 1–2 s (<code>ros2 topic pub -r 100 …</code>), Ctrl+C to stop. Confirms an external machine can command the arm; also verify the 100 Hz streaming behavior first-hand.</li>
+</ol>
+<p>Exit criteria for the session: topic dump saved, rates and bandwidths for the key topics noted, command topics identified, external command authority confirmed. Those numbers configure the recorder — next step in the <a href="../../chapters/03-operation/roadmap-fall-2026.html">roadmap</a> week plan.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -671,13 +841,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../index.html" class="pagination-link" aria-label="LfD for Complex Tasks — VLA Control of OARbot">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">LfD for Complex Tasks — VLA Control of OARbot</span></span>
+      <a href="../../chapters/03-operation/roadmap-fall-2026.html" class="pagination-link" aria-label="Fall 2026 Roadmap — experiments to December">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fall 2026 Roadmap — experiments to December</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/01-background/CH-1a-example-section.html" class="pagination-link" aria-label="Example section">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Example section</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" class="pagination-link" aria-label="SOP-01: Example procedure">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
