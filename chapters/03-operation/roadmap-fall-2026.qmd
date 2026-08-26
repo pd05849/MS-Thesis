@@ -1,95 +1,41 @@
 ---
 title: "Fall 2026 Roadmap — experiments to December"
-date: 2026-08-25
+date: 2026-08-20
 ---
 
-Working plan from today (Aug 25) to the results freeze in December.
-The [top-level Gantt](../../index.qmd) is the source of truth for
-dates; this page holds the reasoning behind them: research questions,
-week-level milestones, the quantifiables spec (metrics, generalization
-tiers, failure taxonomy), the literature map, the open-source stack,
-and how AI research assistants are used. Revise it whenever the plan
-changes — it becomes the skeleton of the Methods chapter and the
-defense timeline slide.
+Working plan from today (Aug 20) to the results in December/January. The [top-level Gantt](../../index.qmd) is the source of truth for dates; this page holds the reasoning behind them: research questions, week-level milestones, the quantifiables spec (metrics, generalization tiers, failure taxonomy), the literature map, the open-source stack, and how AI research assistants are used. Revise it whenever the plan changes, it becomes the skeleton of the Methods chapter and the defense timeline slide.
 
 ## Research questions
 
-The thesis claim is built around three questions. Every experiment
-should answer one of them; anything that doesn't is scope creep.
+The thesis claim is built around three questions. Every experiment should answer one of them.
 
-**RQ1 — Adaptation.** Can current open vision-language-action (VLA)
-foundation models (NVIDIA GR00T N1.5, SmolVLA, optionally π0) be
-adapted to a *new embodiment* — the OARbot (Clearpath Dingo omni base
-+ Kinova Jaco Gen2 6-DOF arm) — with a modest demonstration dataset
-collected in the lab?
+**RQ1 — Adaptation.** Can current open vision-language-action (VLA) foundation models (NVIDIA GR00T N1.5, SmolVLA, optionally π0) be adapted to a *new embodiment*, the OARbot (Clearpath Dingo omni base + Kinova Jaco Gen2 6-DOF arm) with a modest demonstration dataset collected in the lab?
 
-**RQ2 — Comparison & generalization.** On a fixed task suite, how do
-the fine-tuned VLAs compare against each other *and against a
-from-scratch imitation baseline (ACT) trained only on our
-demonstrations* — both on in-distribution success rate and on how
-gracefully performance degrades across generalization tiers (unseen
-poses, distractors, novel object instances, paraphrased
-instructions)? The baseline is what makes generalization attributable:
-if the VLAs degrade less than ACT out of distribution, that gap *is*
-the measured value of internet-scale pretraining.
+**RQ2 — Comparison & generalization.** On a fixed task suite, how do the fine-tuned VLAs compare against each other *and against a from-scratch imitation baseline (ACT) trained only on our demonstrations*, both on in-distribution success rate and on how performance degrades across generalization tiers (unseen poses, distractors, novel object instances, paraphrased instructions)? The baseline is what makes generalization attributable: if the VLAs degrade less than ACT out of distribution, that gap *is* the measured value of internet-scale pretraining.
 
-**RQ3 — Practicality.** What are the real compute and data costs —
-fine-tuning wall-clock on a DGX Spark, demos-per-task needed, on-robot
-inference rates — and what does that imply for small-lab replication?
+**RQ3 — Practicality.** What are the real compute and data costs, fine-tuning wall-clock on a DGX Spark, demos-per-task needed, on-robot inference rates, and what does that imply for small-lab replication?
 
-RQ3 is the differentiator: most VLA papers report results on the
-authors' hardware fleet; a careful account of what it takes to adapt
-these models on one robot with two lab machines is a genuine
-contribution.
+RQ3 is the differentiator: most VLA papers report results on the authors' hardware fleet; a careful research of what it takes to adapt these models on one robot with two lab machines is a new contribution.
 
 ## Compute and platform allocation
 
 | Machine | Role |
-|---|---|
+|------------------------------------|------------------------------------|
 | DGX Spark (GB10, 128 GB unified memory) | All fine-tuning: GR00T N1.5 (NVIDIA ships a DGX Spark fine-tuning playbook for it), SmolVLA full fine-tune, π0 LoRA if attempted |
-| RTX workstation ("7080" — confirm exact model, likely RTX 5080) | Policy inference at eval time (joins the robot's ROS 2 graph over the network), dataset QC and visualization |
-| OARbot's own computers | Teleop and demo recording happen here, not on the RTX box: Surface Go 2 tablet + SpaceMouse/deadman/E-stop is the operator interface; the **helper laptop** is the hub that drives the Kinova arm (USB-B) and runs the device nodes; the Dingo onboard PC runs the ROS 2 Jazzy base; the NUC handles overhead-camera pose estimation (per the [OARbot docs](https://rpirobotics.github.io/oarbots/docs/getting-started/hardware-overview)) |
+| RTX workstation | Robot-side: teleop, data recording, policy inference at eval time, dataset visualization |
+| OARbot helper laptop + Dingo onboard PC | ROS 2 Jazzy stack, drivers, cameras (per the [OARbot docs](https://rpirobotics.github.io/oarbots/docs/getting-started/hardware-overview)) |
 
-Keep training and robot operation on separate machines from day one so
-data collection never competes with training runs.
+Important to keep training and robot operation on separate machines from day one so data collection never competes with training runs.
 
 ## Month-by-month plan
 
 ### September — bring-up, task suite, literature (epics B1, A2, A1)
 
-- **Week of Sep 1:** Full teleop chain on one OARbot: drive the base,
-  command the arm (SpaceMouse), stream both Azure Kinects. Verify
-  E-stop and deadman behavior. Note which sensors are actually usable
-  (docs already flag the UWB units as inoperable).
-- **Week of Sep 8:** Record demonstrations into **LeRobotDataset
-  format** — joint states + base velocity + camera frames, replay a
-  recorded episode open-loop on the robot to prove the pipeline is
-  lossless. This replay test is the single most important de-risking
-  step of the semester.
-- **Week of Sep 15:** Freeze the **task suite** (epic A2): 3 tasks in
-  increasing difficulty, e.g. (T1) tabletop pick-and-place, arm only;
-  (T2) fetch — navigate to a table, grasp, return; (T3) a true
-  mobile-manipulation task with base+arm coordination (open a door,
-  clear a table). Scope grows in that order **by design**: start
-  arm-only with the base parked, expand only once T1 works. Even so,
-  freeze the full 10-D action/state schema (6 arm + 3 base + gripper)
-  from the first recorded episode — base dims logged as zeros while
-  parked — so widening scope later means new data, never a pipeline
-  rewrite. Define per-task success criteria, the staged
-  **progress rubric** (reach / grasp / transport / place), the
-  in-distribution randomization grid, and the **generalization tiers
-  G1–G4** (see the quantifiables spec below) *before* collecting
-  data. Confirm the suite with the advisor. Also start the
-  **action-space decision log**: every embodiment-design choice
-  (joint deltas vs. absolutes, base twist representation, chunk
-  length, control rates, normalization) gets a dated entry with the
-  reasoning — this log becomes the Methods section on adapting VLA
-  action heads to a mobile manipulator.
-- **Week of Sep 22:** Pilot data collection: ~10 episodes per task,
-  train a quick SmolVLA sanity run on T1, fix whatever breaks.
-- **Gate 1 (Sep 26):** teleop + record + replay all work, task suite
-  signed off. *Fallback if late: drop T3 base motion and run an
-  arm-centric thesis — decide here, not in November.*
+- **Week of Sep 1:** Full teleop chain on one OARbot: drive the base, command the arm (SpaceMouse), stream both Azure Kinects. Verify E-stop. Note which sensors are actually usable (docs already flag the UWB units as inoperable).
+- **Week of Sep 8:** Record demonstrations into **LeRobotDataset format**: joint states + (base velocity, future proof) + camera frames, replay a recorded episode open-loop on the robot to prove the pipeline is lossless. This replay test is very important to corroborate the strategy works.
+- **Week of Sep 15:** Freeze the **task suite** (epic A2): 3 tasks in increasing difficulty, e.g. (T1) tabletop pick-and-place, arm only; (T2) fetch and navigate to a table, grasp, return; (T3) a true mobile-manipulation task with base+arm coordination (open a door, clear a table). Define per-task success criteria, the staged **progress rubric** (reach / grasp / transport / place), the in-distribution randomization grid, and the **generalization tiers G1–G4** (see the quantifiables spec below) *before* collecting data. Confirm the suite with the advisor. Also start the **action-space decision log**: every embodiment-design choice (joint deltas vs. absolutes, base twist representation, chunk length, control rates, normalization) gets a dated entry with the reasoning,  this log becomes the Methods section on adapting VLA action heads to a mobile manipulator.
+- **Week of Sep 22:** Pilot data collection: \~10 episodes per task, train a quick SmolVLA sanity run on T1, fix whatever breaks.
+- **Gate 1 (Sep 26):** teleop + record + replay all work, task suite signed off. *Fallback if late: drop T3 base motion and run an arm-centric thesis, decide here.*
 
 #### Data-pipeline decisions (locked 2026-08-25)
 
@@ -116,7 +62,9 @@ data collection never competes with training runs.
 2. **Angular control** — does the lab stack expose joint
    position/velocity *streaming* to the Gen2? Teleop only proves the
    Cartesian path; policies need the joint path. Biggest unknown on
-   the platform.
+   the platform. *(Resolved 2026-08-26: the kinova-ros2 driver streams
+   `in/joint_velocity` at exactly 100 Hz — see the
+   [platform notes](platform-notes.qmd).)*
 3. Gripper commands land on a ROS topic and appear in recordings.
 4. Round-trip latency: camera → RTX box → command back to the helper
    laptop (decides wireless inference viability; chunk ≈ 3× latency).
@@ -127,132 +75,76 @@ data collection never competes with training runs.
 
 ### October — dataset at scale + first baseline (epics B2, C2)
 
-- **Weeks of Oct 5 / Oct 12:** Main collection push, target **50–100
-  episodes per task** (ACT/SmolVLA-class results are routinely
-  reported around 50 demos/task; more helps T3). Interleave tasks and
-  vary object poses per the randomization grid. Nightly QC script:
-  episode counts, joint-limit outliers, dropped frames.
-- **Week of Oct 19:** SmolVLA fine-tuned per-task on the Spark, and
-  **ACT trained from scratch on the identical data** — it trains in
-  hours and rides along on the same LeRobot dataset, giving the
-  no-pretraining reference point for RQ2. First closed-loop rollouts
-  on the robot.
-- **Week of Oct 26:** Start GR00T N1.5 fine-tuning (epic C1) — the
-  new-embodiment head needs the most debugging lead time. First
-  structured mini-eval (10 trials/task) of SmolVLA.
-- **Gate 2 (Oct 31):** SmolVLA achieves non-zero success on T1 with a
-  documented eval protocol. *If zero: freeze collection, debug the
-  data/normalization/camera pipeline first — more bad data won't
-  help.*
+- **Weeks of Oct 5 / Oct 12:** Main collection push, target **50–100 episodes per task** (ACT/SmolVLA-class results are routinely reported around 50 demos/task; more helps T3). Interleave tasks and vary object poses per the randomization grid. Nightly QC script: episode counts, joint-limit outliers, dropped frames.
+- **Week of Oct 19:** SmolVLA fine-tuned per-task on the Spark, and **ACT trained from scratch on the identical data** — it trains in hours and rides along on the same LeRobot dataset, giving the no-pretraining reference point for RQ2. First closed-loop rollouts on the robot.
+- **Week of Oct 26:** Start GR00T N1.5 fine-tuning (epic C1) — the new-embodiment head needs the most debugging lead time. First structured mini-eval (10 trials/task) of SmolVLA.
+- **Gate 2 (Oct 31):** SmolVLA achieves non-zero success on T1 with a documented eval protocol. *If zero: freeze collection, debug the data/normalization/camera pipeline first — more bad data won't help.*
 
 ### November — GR00T + full evaluation (epics C1, C3)
 
-- **Weeks of Nov 2 / Nov 9:** GR00T N1.5 tuned across tasks; top-up
-  data collection where QC shows gaps; π0 (LoRA via LeRobot/openpi)
-  only if both main models are stable.
-- **Week of Nov 16:** Full evaluation begins (epic C3): **≥20
-  trials/task/policy** on the shared in-distribution grid, everything
-  in the quantifiables spec logged per trial, video of every trial.
-  Budget realistically — 3 tasks × 4 policies (ACT, SmolVLA, GR00T,
-  π0-if-attempted) × 20 trials at ~3 min/trial is ~12 robot-hours
-  *per full round*, plus resets.
-- **Gate 3 (Nov 27):** Decide final comparison set (ACT + 2 or 3
-  VLAs) and confirm the **data-scale ablation** (retrain at 25/50/100
-  demos on one task) fits the calendar.
+- **Weeks of Nov 2 / Nov 9:** GR00T N1.5 tuned across tasks; top-up data collection where QC shows gaps; π0 (LoRA via LeRobot/openpi) only if both main models are stable.
+- **Week of Nov 16:** Full evaluation begins (epic C3): **≥20 trials/task/policy** on the shared in-distribution grid, everything in the quantifiables spec logged per trial, video of every trial. Budget realistically — 3 tasks × 4 policies (ACT, SmolVLA, GR00T, π0-if-attempted) × 20 trials at \~3 min/trial is \~12 robot-hours *per full round*, plus resets.
+- **Gate 3 (Nov 27):** Decide final comparison set (ACT + 2 or 3 VLAs) and confirm the **data-scale ablation** (retrain at 25/50/100 demos on one task) fits the calendar.
 
 ### December — finish, freeze, outline (epics C3, D)
 
-- **Weeks of Dec 1 / Dec 7:** Complete in-distribution eval rounds +
-  data-scale ablation; **generalization round** — tiers G1–G4 on each
-  model's best checkpoint only (10 trials/tier, see quantifiables
-  spec).
-- **Week of Dec 14:** Re-runs and holes only. **Results freeze Dec 18**
-  — after this date, no new experiments, only analysis.
-- **Week of Dec 21:** All results tables and figures generated by
-  script from logged data; chapter outline drafted in `chapters/`.
+- **Weeks of Dec 1 / Dec 7:** Complete in-distribution eval rounds + data-scale ablation; **generalization round** — tiers G1–G4 on each model's best checkpoint only (10 trials/tier, see quantifiables spec).
+- **Week of Dec 14:** Re-runs and holes only. **Results freeze Dec 18** — after this date, no new experiments, only analysis.
+- **Week of Dec 21:** All results tables and figures generated by script from logged data; chapter outline drafted in `chapters/`.
 
 ### January–March 2027
 
-Chapter drafts Jan 4 – Feb 26 (Background and Methods first — most of
-Methods should fall out of this page and the epic READMEs), full draft
-to advisor end of February, defense mid-March (confirm the exact date
-and committee logistics with the advisor **in September**, not
-January).
+Chapter drafts Jan 4 – Feb 26 (Background and Methods first — most of Methods should fall out of this page and the epic READMEs), full draft to advisor end of February, defense mid-March (confirm the exact date and committee logistics with the advisor **in September**, not January).
 
 ## Quantifiables — what gets measured and reported
 
-What the results chapter must contain, modeled on what this class of
-papers (ACT, Diffusion Policy, OpenVLA, π0, SmolVLA, GR00T, Mobile
-ALOHA) actually reports. Frozen in epic A2 before data collection;
-every eval trial logs a row with all of these fields plus a video
-path.
+What the results chapter must contain, modeled on what this class of papers (ACT, Diffusion Policy, OpenVLA, π0, SmolVLA, GR00T, Mobile ALOHA) actually reports. Frozen in epic A2 before data collection; every eval trial logs a row with all of these fields plus a video path.
 
 ### Decision thresholds — what "achieved" means
 
-Targets are pre-registered thresholds, not promises. A miss, analyzed
-honestly, is still a result.
+Targets are pre-registered thresholds, not promises. A miss, analyzed honestly, is still a result.
 
-- **Platform validated:** ≥1 policy reaches **≥70% success on T1**
-  in-distribution.
-- **Pretraining transfer confirmed:** the VLAs beat from-scratch ACT
-  on the generalization tiers by **≥15 percentage points** average. A
-  null or negative gap = "pretraining did not pay off at this data
-  scale on this embodiment" — a publishable negative result.
-- **Practicality documented:** complete cost sheet (below) for every
-  model, no gaps.
+- **Platform validated:** ≥1 policy reaches **≥70% success on T1** in-distribution.
+- **Pretraining transfer confirmed:** the VLAs beat from-scratch ACT on the generalization tiers by **≥15 percentage points** average. A null or negative gap = "pretraining did not pay off at this data scale on this embodiment", a publishable negative result.
+- **Practicality documented:** complete cost sheet (below) for every model, no gaps.
 
 ### Primary metrics (every policy, every task)
 
 | Metric | Definition | Reported as |
-|---|---|---|
-| Success rate | Binary per trial against the frozen rubric; human intervention = failure | % with 95% Wilson CI, n ≥ 20 |
+|------------------------|------------------------|------------------------|
+| Success rate | Binary per trial against the frozen rubric; human intervention = failure | \% with 95% Wilson CI, n ≥ 20 |
 | Progress score | Staged credit: reach 0.25 / grasp 0.5 / transport 0.75 / place 1.0 (per-task rubric) | Mean 0–1; separates "never grasps" from "drops at the end" when success rates are low |
-| Time to completion | Successful trials only, start signal → success condition | Median [IQR] seconds |
+| Time to completion | Successful trials only, start signal → success condition | Median \[IQR\] seconds |
 
 ### Secondary metrics
 
 | Metric | Definition | Reported as |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | Inference latency | Camera frame in → action chunk out, on the RTX workstation | ms per chunk + achieved control rate (Hz) |
 | Generalization gap | In-distribution success minus per-tier success | Percentage points, per tier per policy |
 | Data efficiency | Success rate at 25 / 50 / 100 training demos (one task, all policies) | Curve — the small-lab money figure |
 
 ### Generalization tiers (RQ2)
 
-Evaluated on each model's **best checkpoint only**, 10 trials/tier,
-selection rules frozen in A2:
+Evaluated on each model's **best checkpoint only**, 10 trials/tier, selection rules frozen in A2:
 
 - **G0** — in-distribution: objects and poses from the training grid.
 - **G1 — spatial:** object poses outside the training grid.
 - **G2 — visual:** distractor objects + lighting change.
-- **G3 — object:** novel instance of the same category (different
-  mug, different box).
-- **G4 — language:** paraphrased instruction, same task ("pick up the
-  cup" → "grab the mug"). VLA-only tier — ACT has no language input,
-  which is itself part of the comparison story.
+- **G3 — object:** novel instance of the same category (different mug, different box).
+- **G4 — language:** paraphrased instruction, same task ("pick up the cup" → "grab the mug"). VLA-only tier — ACT has no language input, which is itself part of the comparison story.
 
 ### Failure taxonomy
 
-Every failed trial gets a **first-failure label** from this closed
-list, logged at eval time (10 seconds of effort) with the video path:
+Every failed trial gets a **first-failure label** from this closed list, logged at eval time (10 seconds of effort) with the video path:
 
-`perception/grounding` (approached wrong object) ·
-`navigation/base-pose` (stopped out of reach) · `grasp` (contact but
-slip/miss) · `manipulation-trajectory` (jerky/unsafe motion, joint
-limit) · `instruction` (did the wrong task) · `stall/timeout` ·
-`hardware` (excluded and retried, not counted).
+`perception/grounding` (approached wrong object) · `navigation/base-pose` (stopped out of reach) · `grasp` (contact but slip/miss) · `manipulation-trajectory` (jerky/unsafe motion, joint limit) · `instruction` (did the wrong task) · `stall/timeout` · `hardware` (excluded and retried, not counted).
 
-Rendered as stacked bars per policy × task — this figure explains
-*why* the success rates differ and is the backbone of the analysis
-chapter.
+Rendered as stacked bars per policy × task — this figure explains *why* the success rates differ and is the backbone of the analysis chapter.
 
 ### Practicality cost sheet (RQ3)
 
-Per model: fine-tuning wall-clock hours and peak memory on the DGX
-Spark, trainable parameter count (LoRA vs. full), GPU-hours per
-training run, on-robot inference hardware requirements. Plus data
-cost: minutes per collected episode, total collection hours, retake
-rate.
+Per model: fine-tuning wall-clock hours and peak memory on the DGX Spark, trainable parameter count (LoRA vs. full), GPU-hours per training run, on-robot inference hardware requirements. Plus data cost: minutes per collected episode, total collection hours, retake rate.
 
 ### Deliverables checklist (results chapter)
 
@@ -260,79 +152,54 @@ rate.
 - **T2** Generalization matrix: policy × tier
 - **T3** Efficiency: latency, control rate, completion time
 - **T4** Cost sheet (RQ3)
-- **F1** Data-scale curve · **F2** Failure-mode stacked bars ·
-  **F3** Qualitative rollout film-strips (best + worst per policy)
+- **F1** Data-scale curve · **F2** Failure-mode stacked bars · **F3** Qualitative rollout film-strips (best + worst per policy)
 
-Protocol hygiene: the randomization grid and rubrics are frozen
-before collection; checkpoint selection criteria defined before eval;
-all runs reported (no cherry-picked seeds); every trial has video.
+Protocol hygiene: the randomization grid and rubrics are frozen before collection; checkpoint selection criteria defined before eval; all runs reported (no cherry-picked seeds); every trial has video.
 
 ## Literature map
 
-Organized by the Background chapter's likely sections. Maintain
-citations in Zotero and export to `references.bib` (keep BibTeX keys
-stable). Verify every reference on arXiv/Semantic Scholar before it
-enters the bib file — never cite from an LLM's memory.
+Organized by the Background chapter's likely sections. Maintain citations in Zotero and export to `references.bib` (keep BibTeX keys stable). Verify every reference on arXiv/Semantic Scholar before it enters the bib file — never cite from an LLM's memory.
 
 **1. Learning from demonstration — foundations**
 
-- Argall, Chernova, Veloso, Browning (2009), *A survey of robot
-  learning from demonstration* — the canonical survey to anchor the
-  chapter.
+- Argall, Chernova, Veloso, Browning (2009), *A survey of robot learning from demonstration* — the canonical survey to anchor the chapter.
 - Pomerleau (1988), ALVINN — behavioral cloning origin.
-- Ross, Gordon, Bagnell (2011), DAgger — compounding-error argument
-  every IL thesis needs.
+- Ross, Gordon, Bagnell (2011), DAgger — compounding-error argument every IL thesis needs.
 
 **2. Modern imitation learning architectures**
 
-- Zhao et al. (RSS 2023), ACT / ALOHA — action chunking; the direct
-  ancestor of today's VLA action heads.
+- Zhao et al. (RSS 2023), ACT / ALOHA — action chunking; the direct ancestor of today's VLA action heads.
 - Chi et al. (RSS 2023), Diffusion Policy — generative action heads.
-- Lipman et al. (ICLR 2023), Flow Matching — theory behind π0-style
-  and GR00T-style flow action heads.
-- Fu, Zhao, Finn (2024), Mobile ALOHA — the closest published setup
-  to this thesis: whole-body IL on a mobile manipulator.
+- Lipman et al. (ICLR 2023), Flow Matching — theory behind π0-style and GR00T-style flow action heads.
+- Fu, Zhao, Finn (2024), Mobile ALOHA — the closest published setup to this thesis: whole-body IL on a mobile manipulator.
 
 **3. Vision-language-action models**
 
 - Brohan et al., RT-1 (2022) and RT-2 (2023) — the VLA lineage.
-- Open X-Embodiment collaboration (2023/24) — cross-embodiment
-  pretraining; why adapting a generalist to OARbot is plausible at all.
+- Open X-Embodiment collaboration (2023/24) — cross-embodiment pretraining; why adapting a generalist to OARbot is plausible at all.
 - Octo Model Team (2024) — open generalist policy.
-- Kim et al. (2024), OpenVLA — open 7B VLA + fine-tuning recipes
-  (see also the OpenVLA-OFT follow-up on efficient fine-tuning).
-- Black et al. (2024), π0; Physical Intelligence (2025), π0.5 — flow
-  matching VLA, open weights via openpi.
-- Hugging Face (2025), SmolVLA — small (~450M) VLA designed for
-  exactly this compute class; likely the workhorse baseline.
-- NVIDIA (2025), GR00T N1 paper (+ N1.5 release notes) — the primary
-  model; its dual-system architecture and new-embodiment fine-tuning
-  story are directly load-bearing.
-- Google DeepMind (2025), Gemini Robotics — closed, but frames the
-  state of the art in Background.
+- Kim et al. (2024), OpenVLA — open 7B VLA + fine-tuning recipes (see also the OpenVLA-OFT follow-up on efficient fine-tuning).
+- Black et al. (2024), π0; Physical Intelligence (2025), π0.5 — flow matching VLA, open weights via openpi.
+- Hugging Face (2025), SmolVLA — small (\~450M) VLA designed for exactly this compute class; likely the workhorse baseline.
+- NVIDIA (2025), GR00T N1 paper (+ N1.5 release notes) — the primary model; its dual-system architecture and new-embodiment fine-tuning story are directly load-bearing.
+- Google DeepMind (2025), Gemini Robotics — closed, but frames the state of the art in Background.
 
 **4. Mobile manipulation and assistive context**
 
-- TidyBot (2023), HomeRobot/OVMM (2023), BEHAVIOR-1K (2023) —
-  mobile-manipulation task framing and benchmarks.
-- RPI's own OARbot publications — get the list from the advisor; the
-  assistive-robotics motivation should cite the lab's line of work.
+- TidyBot (2023), HomeRobot/OVMM (2023), BEHAVIOR-1K (2023) — mobile-manipulation task framing and benchmarks.
+- RPI's own OARbot publications — get the list from the advisor; the assistive-robotics motivation should cite the lab's line of work.
 
 **5. Datasets and evaluation methodology**
 
-- DROID (2024), BridgeData V2 (2023), AgiBot World (2025) —
-  large-scale teleop dataset practice worth imitating at small scale.
+- DROID (2024), BridgeData V2 (2023), AgiBot World (2025) — large-scale teleop dataset practice worth imitating at small scale.
 - LIBERO (2023) — task-suite design and eval discipline.
-- SimplerEnv — Li et al. (2024), *Evaluating Real-World Robot
-  Manipulation Policies in Simulation* — the real-vs-sim eval gap.
-- Recent work on statistically sound robot policy evaluation (trial
-  counts, confidence intervals, A/B protocols) — good target for a
-  deep-research sweep, see below.
+- SimplerEnv — Li et al. (2024), *Evaluating Real-World Robot Manipulation Policies in Simulation* — the real-vs-sim eval gap.
+- Recent work on statistically sound robot policy evaluation (trial counts, confidence intervals, A/B protocols) — good target for a deep-research sweep, see below.
 
 ## Open-source stack
 
 | Resource | Use here |
-|---|---|
+|------------------------------------|------------------------------------|
 | [LeRobot](https://github.com/huggingface/lerobot) | Dataset format, teleop recording, SmolVLA + π0 (PyTorch) training/eval — the backbone of B2/C2 |
 | [Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | GR00T N1.5 checkpoints + new-embodiment fine-tuning scripts; check NVIDIA's DGX Spark playbook |
 | [openpi](https://github.com/Physical-Intelligence/openpi) | π0/π0.5 reference implementation (JAX) if the LeRobot port falls short |
@@ -341,37 +208,22 @@ enters the bib file — never cite from an LLM's memory.
 | Weights & Biases (or TensorBoard) | Training curves + eval run tracking, linked from weekly updates |
 | Zotero → `references.bib` | Single bibliography pipeline into Quarto |
 
-Stretch only (explicitly out of scope unless everything lands early):
-Isaac Lab / SimplerEnv-style sim twin of a task for cheap eval — you
-have Isaac Sim experience from the SO-101 project, but a sim twin is
-a second thesis; park it in Future Work.
+Stretch only (explicitly out of scope unless everything lands early): Isaac Lab / SimplerEnv-style sim twin of a task for cheap eval — you have Isaac Sim experience from the SO-101 project, but a sim twin is a second thesis; park it in Future Work.
 
 ## Using AI research assistants
 
 Division of labor — each tool where it is strongest:
 
-- **Gemini Deep Research** — breadth: one report per Background
-  section above ("annotated bibliography of VLA fine-tuning on novel
-  embodiments 2023–2026, with arXiv links"). Also the eval-methodology
-  sweep in §5.
-- **ChatGPT (deep research)** — cross-check Gemini's reports;
-  protocol questions ("how many trials for a detectable 15-point
-  success-rate difference between two policies?").
-- **NotebookLM** — load the collected PDFs per chapter section; ask
-  grounded cross-paper questions while writing Background.
-- **Claude Code** — everything in-repo: LeRobot/GR00T pipeline code,
-  QC scripts, eval analysis, figures, Quarto chapter drafting, and
-  keeping this PM surface honest.
+- **Gemini Deep Research** breadth: one report per Background section above ("annotated bibliography of VLA fine-tuning on novel embodiments 2023–2026, with arXiv links"). Also the eval-methodology sweep in §5.
+- **ChatGPT (deep research)** cross-check Gemini's reports; protocol questions ("how many trials for a detectable 15-point success-rate difference between two policies?").
+- **Claude Code** everything in-repo: Keeping this PM surface honest and clean.
 
-Standing rule: LLM output is a *lead*, never a *citation*. Every
-claim that survives into the thesis gets verified against the primary
-source, and every reference is checked on arXiv before entering
-`references.bib`.
+Standing rule: LLM output is a *lead*, never a *citation*. Every claim that survives into the thesis gets verified against the primary source, and every reference is checked on arXiv before entering `references.bib`.
 
 ## Risk register
 
 | Risk | Likelihood | Mitigation |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | Bring-up eats October (drivers, arm, cameras) | High | Gate 1 fallback: arm-only task suite, decided Sep 26 |
 | Demo data too little/noisy for T3 | Medium | Tiered tasks — T1/T2 alone still answer RQ1–RQ3; data-scale ablation turns "not enough data" into a finding |
 | GR00T new-embodiment head underperforms | Medium | SmolVLA is the guaranteed baseline; a negative GR00T result, carefully analyzed, is still a thesis result |
@@ -382,7 +234,4 @@ source, and every reference is checked on arXiv before entering
 
 ## Cadence
 
-Weekly update (`.\thesis.ps1 new wu`) every Friday: progress, frozen
-Gantt snapshot, blockers, questions for advisor. The board and Gantt
-on the [home page](../../index.qmd) stay the single source of truth —
-no parallel tracker (Notion/Trello) gets created.
+Weekly update (`.\thesis.ps1 new wu`) every Friday: progress, frozen Gantt snapshot, blockers, questions for Prof. Wen. The board and Gantt on the [home page](../../index.qmd) stay the single source of truth.

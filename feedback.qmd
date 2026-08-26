@@ -1,0 +1,76 @@
+---
+title: "Feedback inbox"
+---
+
+The live queue from `FEEDBACK.md`. Add notes from any page with the ✎
+button in the bottom-right corner (the page name is tagged
+automatically), or from the form below. Saying *"apply my feedback"* to
+Claude — or running `/thesis-feedback` — applies every open item to the
+source files and moves it to the Applied log.
+
+This console only works on the local preview with the feedback server
+running; on the published site it shows nothing.
+
+```{=html}
+<div id="fbc" style="max-width:100%">
+  <div style="border:1px solid #ddd;border-radius:8px;padding:12px;margin-bottom:16px">
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <input id="fbc-page" type="text" placeholder="Page (e.g. roadmap, platform notes)"
+             style="flex:1;padding:6px;font:inherit;border:1px solid #ccc;border-radius:6px">
+    </div>
+    <textarea id="fbc-text" placeholder="What should change?"
+              style="width:100%;height:80px;box-sizing:border-box;font:inherit;padding:6px;border:1px solid #ccc;border-radius:6px"></textarea>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+      <span id="fbc-status" style="color:#555;font-size:13px"></span>
+      <button id="fbc-send" style="border:1px solid #2760aa;background:#2760aa;color:#fff;border-radius:6px;padding:6px 14px;cursor:pointer;font:inherit">Queue note</button>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <h3 style="margin:0">Current queue</h3>
+    <button id="fbc-refresh" style="border:1px solid #ccc;background:#fff;border-radius:6px;padding:4px 10px;cursor:pointer;font:inherit;font-size:13px">Refresh</button>
+  </div>
+  <pre id="fbc-view" style="white-space:pre-wrap;background:#f8f8f8;border:1px solid #eee;border-radius:8px;padding:12px;margin-top:8px;font-size:13px">Loading…</pre>
+</div>
+<script>
+(function () {
+  var API = "http://127.0.0.1:4211/feedback";
+  var view = document.getElementById("fbc-view");
+  var status = document.getElementById("fbc-status");
+
+  function load() {
+    fetch(API).then(function (r) { return r.text(); }).then(function (t) {
+      view.textContent = t;
+    }).catch(function () {
+      view.textContent = "Feedback server not reachable (127.0.0.1:4211).\n" +
+        "This console works on the local preview only, with the " +
+        "'thesis-feedback-server' running.";
+    });
+  }
+
+  document.getElementById("fbc-refresh").addEventListener("click", load);
+  document.getElementById("fbc-send").addEventListener("click", function () {
+    var note = document.getElementById("fbc-text").value.trim();
+    var page = document.getElementById("fbc-page").value.trim() || "site";
+    if (!note) { status.textContent = "Write a note first."; return; }
+    status.textContent = "Saving…";
+    fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ page: page, path: "", note: note })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.ok) {
+        document.getElementById("fbc-text").value = "";
+        status.textContent = "Queued ✓";
+        load();
+      } else {
+        status.textContent = "Error: " + (d.error || "unknown");
+      }
+    }).catch(function () {
+      status.textContent = "Feedback server not running.";
+    });
+  });
+
+  load();
+})();
+</script>
+```

@@ -1,0 +1,149 @@
+---
+title: "OARbot platform notes — findings & day-1 checklist"
+date: 2026-08-26
+---
+
+Compressed findings from digesting the OARbot documentation
+([oarbots repo](https://github.com/rpirobotics/oarbots) ·
+[docs site](https://rpirobotics.github.io/oarbots/) ·
+[kinova-ros2](https://github.com/rpiRobotics/kinova-ros2)) before first
+contact with the robot, plus the reconnaissance checklist for the first
+lab session. Feeds epic
+[B1](../../initiatives/platform-data/epics/B1-oarbot-bringup-teleop/README.qmd);
+the reasoning behind the pipeline lives in the
+[Fall 2026 roadmap](roadmap-fall-2026.qmd). Update this page as the
+topic dump and rate measurements replace assumptions with numbers.
+
+## Findings — how the OARbot communicates
+
+### Network and middleware
+
+- ROS 2 **Jazzy** with **CycloneDDS** (`RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`)
+  on the lab Wi-Fi `CII8218-oarbots`. *Not* Fast DDS — keep this
+  machine's env separate from the Isaac Sim / SO-101 setup.
+- Discovery is peer-to-peer (no master): any machine on the Wi-Fi with
+  domain ID 0 sees everything. Connectivity check: `ros2 topic list`.
+- **Domain layout:** each robot runs internally in its own ROS domain —
+  Blue = 2, Silver = 1 — and a **domain bridge** re-publishes both onto
+  the shared domain 0 with `/oarbot_blue/…` and `/oarbot_silver/…`
+  prefixes. The bridge is bidirectional: sensor streams out, commands in.
+- Multi-network trouble → pin the interface in `~/.ros/cyclonedds.xml`
+  and set `CYCLONEDDS_URI`.
+
+### Hardware (per robot)
+
+| Component | Detail |
+|---|---|
+| Base | Clearpath Dingo DO-100, mecanum (omnidirectional), onboard PC runs its ROS nodes |
+| Arm | Kinova Jaco Gen2 6-DOF, 3-finger (`j2n6s300`), USB to helper laptop |
+| Helper laptop | Lenovo ThinkPad on the base; runs `kinova_driver` + Kinect node, auto-launches at boot |
+| Cameras | Azure Kinect on each arm (RGB-D, 30 fps max); overhead Kinect on a NUC does ArUco pose estimation (Blue tag 0, Silver tag 4) |
+| F/T sensor | Bota Rokubi Gen0 at the wrist — enables admittance (kinesthetic) mode |
+| Teleop | Surface Go 2 tablet: SpaceMouse Compact + deadman switch + E-stop; GUI via `tablet_launch.sh` |
+| Inoperable | UWB units (DecaWave MDEK1001) — ignore |
+
+Boot order is strict (nodes fail to launch otherwise): batteries →
+Dingo → arm (hold home) → helper laptop → NUC (replug Kinect USB) →
+tablet → disengage E-stop → launch GUI.
+
+### The arm interface (kinova-ros2)
+
+Topic names below are the stock driver names; on the lab network they
+appear under the bridge prefix (exact names TBC from the topic dump).
+
+| Direction | Topic | Type / unit | Notes |
+|---|---|---|---|
+| out | `…driver/out/joint_state` | `sensor_msgs/JointState`, **rad** | primary proprioception |
+| out | `…driver/out/tool_pose` | end-effector pose | |
+| out | `…driver/out/tool_wrench` | wrist wrench | |
+| out | `…driver/out/finger_position` | finger state | |
+| in | `…driver/in/joint_velocity` | `kinova_msgs/JointVelocity`, **deg/s** | must publish at exactly 100 Hz |
+| in | `…driver/in/cartesian_velocity` | `kinova_msgs/PoseVelocity` | same 100 Hz requirement |
+
+Services: `home_arm`, `start`/`stop`, `start_force_control`/`stop_force_control`
+(the tablet's admittance button), `set_zero_torques`. Actions: joint
+trajectory, pose goal, fingers (percent/mm/turns).
+
+Three load-bearing facts from the driver README:
+
+1. **100 Hz is exact, not a minimum.** The arm's DSP loops every 10 ms;
+   slower publishing fails to reach the commanded velocity, faster does
+   nothing. Any policy or teleop source must run through a 100 Hz
+   command repeater.
+2. **Publishing stops ⇒ motion stops.** The velocity stream is a
+   built-in deadman — killing the publisher halts the arm.
+3. **Unit trap:** commands in deg/s, joint states in rad. Convert in
+   exactly one place in the pipeline; log the choice in the
+   action-space decision log.
+
+### Control-rate design (why the policy loop is ~10 Hz)
+
+Two decoupled rates, connected by action chunking: the *decision* loop
+(model inference) at ~10 Hz, the *command* stream at 100 Hz fed by a
+repeater executing the current action chunk. The decision rate is
+bounded by the camera (30 fps ceiling), model latency (ACT ~ms, but
+SmolVLA/GR00T/π0 are 50–200 ms per chunk on the RTX workstation), and
+end-to-end Wi-Fi latency. Published VLAs run 1–10 Hz re-planning with
+high-rate chunk execution (π0: 50 Hz chunks, ~2 Hz model calls).
+Achieved latency/control rate is an RQ3 metric — measured per model,
+not assumed.
+
+### Pipeline decisions locked in so far
+
+- **Bag-first recording:** `ros2 bag record` (one bag per episode,
+  keypress wrapper) is the recorder node — record generously (joints,
+  RGB, depth, wrench, odom, both command topics, `/tf`, `camera_info`).
+  Converter script resamples offline to a fixed policy-rate clock and
+  emits LeRobotDataset; converter bugs cost a re-run, not a
+  re-collection.
+- **Action labels come from achieved states, not raw teleop** (locked
+  2026-08-25): teleop stays Cartesian (SpaceMouse → EE twist → Kinova
+  IK), while training actions are joint positions at t+Δ derived from
+  the recorded joint states — teleop space and training space are
+  decoupled. Details in the roadmap's
+  [data-pipeline decisions](roadmap-fall-2026.qmd).
+- **Replay test is rung 0 of the model ladder:** republish a recorded
+  episode's commands at original timing; the arm must reproduce the
+  demo before any learning starts. Ladder: replay → ACT → SmolVLA →
+  GR00T N1.5 → (π0).
+- **Inference node mirrors the recorder:** same topics in, same
+  preprocessing as training (normalization stats ship with the
+  checkpoint), chunk execution + 100 Hz repeater out, keyboard deadman
+  publishing zeros, human at the E-stop. Dry-run the plumbing with a
+  dummy policy (zeros / replayed chunk) before the first trained model.
+- **Admittance mode is a candidate second demo modality** (kinesthetic
+  guiding via the F/T sensor) — bake off against SpaceMouse teleop in
+  the pilot week; docs warn calibration can be flaky, keep E-stop close.
+
+## Day-1 checklist — first lab session (Aug 27)
+
+Everything read-only except step 7.
+
+1. **Env sanity** on the laptop: Jazzy sourced,
+   `RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`, domain 0, on the lab Wi-Fi.
+2. **Inventory dumps** to files (keep them):
+   `ros2 topic list`, `ros2 node list`, `ros2 service list`,
+   `ros2 action list`.
+3. **Per key topic** (joint states, RGB, depth, `camera_info`, wrench,
+   odom, command topics): `ros2 topic info -v` (type + QoS),
+   `ros2 topic hz` (real rate), `ros2 topic bw` (bandwidth);
+   `ros2 topic echo --once` on `camera_info` for resolution.
+4. **Camera transport decision:** look for `/compressed` siblings. Raw
+   720p RGB ≈ 80 MB/s (Wi-Fi drops frames silently); JPEG is a few
+   MB/s. No compressed topic → `image_transport` republisher, or record
+   on the helper laptop. The `bw` numbers decide where the recorder runs.
+5. **Identify command topics empirically:** teleop with the SpaceMouse
+   while watching `ros2 topic hz` on candidates — whatever the tablet
+   publishes is the action interface.
+6. **Clock check:** compare `header.stamp` against local clock; skew
+   > ~50 ms across machines → set up chrony before recording (camera ↔
+   joint sync is timestamp-based).
+7. **Command authority test** (hand on E-stop): near-zero joint
+   velocity from the laptop for 1–2 s (`ros2 topic pub -r 100 …`),
+   Ctrl+C to stop. Confirms an external machine can command the arm;
+   also verify the 100 Hz streaming behavior first-hand.
+
+Exit criteria for the session: topic dump saved, rates and bandwidths
+for the key topics noted, command topics identified, external command
+authority confirmed. Those numbers configure the recorder — next step
+in the [roadmap](roadmap-fall-2026.qmd) week plan.

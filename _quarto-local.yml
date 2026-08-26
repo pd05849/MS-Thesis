@@ -1,0 +1,29 @@
+# Local-preview profile: adds the feedback console page and the in-page
+# ✎ note widget. Activated only by `quarto preview --profile local`
+# (see .claude/launch.json "oarbot-thesis"); the default/publish render
+# never includes any of this, so no feedback code reaches the public
+# site. Lists below REPLACE the base arrays wholesale (Quarto profile
+# merge semantics), so they restate the full render/appendices sets.
+
+project:
+  render:
+    - "index.qmd"
+    - "feedback.qmd"
+    - "chapters/**/*.qmd"
+    - "updates/**/*.qmd"
+    - "archive/**/*.qmd"
+    - "!**/_template.qmd"
+    - "!**/_template/**"
+    - "!**/_*.qmd"
+
+book:
+  appendices:
+    - updates/index.qmd
+    - initiatives/index.qmd
+    - archive/index.qmd
+    - archive/external-index.qmd
+    - feedback.qmd
+
+format:
+  html:
+    include-after-body: styles/feedback-widget.html

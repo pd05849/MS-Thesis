@@ -41,6 +41,13 @@ def main() -> int:
     if run(["quarto", "render"]) != 0:
         print("publish: render FAILED — aborting.")
         return 1
+    # The feedback console exists only under the local preview profile
+    # (`quarto preview --profile local`); a leftover from a preview
+    # render must not reach the public branch.
+    stale = ROOT / "_site" / "feedback.html"
+    if stale.exists():
+        stale.unlink()
+        print("publish: removed local-only feedback.html from _site")
     if run([sys.executable, str(HERE / "qc" / "link_check.py")]) != 0:
         print("publish: broken local links — fix before publishing.")
         return 1

@@ -1,0 +1,85 @@
+<script>
+(function () {
+  if (!["localhost", "127.0.0.1"].includes(location.hostname)) return;
+  var API = "http://127.0.0.1:4211/feedback";
+
+  var css = document.createElement("style");
+  css.textContent =
+    "#fbw-btn{position:fixed;bottom:22px;right:22px;z-index:9999;width:46px;height:46px;" +
+    "border-radius:50%;border:1px solid #ccc;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.18);" +
+    "font-size:20px;cursor:pointer;line-height:1}" +
+    "#fbw-btn:hover{background:#f2f6ff}" +
+    "#fbw-panel{position:fixed;bottom:78px;right:22px;z-index:9999;width:320px;background:#fff;" +
+    "border:1px solid #ccc;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.22);" +
+    "padding:12px;display:none;font-size:14px}" +
+    "#fbw-panel textarea{width:100%;height:90px;box-sizing:border-box;font:inherit;padding:6px}" +
+    "#fbw-panel .fbw-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}" +
+    "#fbw-send{border:1px solid #2760aa;background:#2760aa;color:#fff;border-radius:6px;" +
+    "padding:5px 12px;cursor:pointer;font:inherit}" +
+    "#fbw-send:disabled{opacity:.5;cursor:default}" +
+    "#fbw-status{color:#555;font-size:12px;max-width:170px}" +
+    "#fbw-page{color:#777;font-size:12px;margin-bottom:6px;overflow:hidden;" +
+    "text-overflow:ellipsis;white-space:nowrap}";
+  document.head.appendChild(css);
+
+  function pageTitle() {
+    var t = document.title.split(" – ")[0].trim();
+    return t.replace(/^[\d.\s]+/, "").trim() || "home";
+  }
+
+  var btn = document.createElement("button");
+  btn.id = "fbw-btn";
+  btn.title = "Add a note about this page to the feedback inbox";
+  btn.setAttribute("aria-label", "Add feedback note");
+  btn.textContent = "✎";
+
+  var panel = document.createElement("div");
+  panel.id = "fbw-panel";
+  panel.innerHTML =
+    '<div id="fbw-page"></div>' +
+    '<textarea id="fbw-text" placeholder="What should change on this page?"></textarea>' +
+    '<div class="fbw-row"><span id="fbw-status"></span>' +
+    '<button id="fbw-send">Queue note</button></div>';
+
+  document.body.appendChild(btn);
+  document.body.appendChild(panel);
+
+  var text = panel.querySelector("#fbw-text");
+  var send = panel.querySelector("#fbw-send");
+  var status = panel.querySelector("#fbw-status");
+
+  btn.addEventListener("click", function () {
+    var open = panel.style.display === "block";
+    panel.style.display = open ? "none" : "block";
+    if (!open) {
+      panel.querySelector("#fbw-page").textContent = "Page: " + pageTitle();
+      status.textContent = "";
+      text.focus();
+    }
+  });
+
+  send.addEventListener("click", function () {
+    var note = text.value.trim();
+    if (!note) { status.textContent = "Write a note first."; return; }
+    send.disabled = true;
+    status.textContent = "Saving…";
+    fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ page: pageTitle(), path: location.pathname, note: note })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      send.disabled = false;
+      if (d.ok) {
+        text.value = "";
+        status.textContent = "Queued in FEEDBACK.md ✓";
+        setTimeout(function () { panel.style.display = "none"; }, 900);
+      } else {
+        status.textContent = "Error: " + (d.error || "unknown");
+      }
+    }).catch(function () {
+      send.disabled = false;
+      status.textContent = "Feedback server not running (port 4211).";
+    });
+  });
+})();
+</script>

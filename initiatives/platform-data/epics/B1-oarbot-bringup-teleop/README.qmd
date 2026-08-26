@@ -26,6 +26,12 @@ signal is recorded in sync — the precondition for
 
 ## Status log
 
+- **2026-08-26:** Platform documentation digested ahead of first lab
+  session — ROS 2 comms architecture (CycloneDDS, domain bridge),
+  kinova-ros2 interface incl. the exact-100 Hz command requirement, and
+  the day-1 reconnaissance checklist.
+  → [Platform notes](../../../../chapters/03-operation/platform-notes.qmd)
+
 <!-- Dated bullets, newest first, each linking its weekly update:
 - **W<N> (YYYY-MM-DD):** what moved this week.
   → [WU-YYYY-MM-DD week N](../../../../updates/WU-YYYY-MM-DD-week-NN/index.html)
