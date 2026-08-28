@@ -115,35 +115,41 @@ not assumed.
   guiding via the F/T sensor) — bake off against SpaceMouse teleop in
   the pilot week; docs warn calibration can be flaky, keep E-stop close.
 
-## Day-1 checklist — first lab session (Aug 27)
+## Day-1 checklist — completed 2026-08-27
 
-Everything read-only except step 7.
+All exit criteria met. Plain-language account in the
+[lab notebook](lab-notebook.qmd); raw dumps and command captures in
+WSL `~/oarbot_recon_2026-08-27/`.
 
-1. **Env sanity** on the laptop: Jazzy sourced,
-   `RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`, domain 0, on the lab Wi-Fi.
-2. **Inventory dumps** to files (keep them):
-   `ros2 topic list`, `ros2 node list`, `ros2 service list`,
-   `ros2 action list`.
-3. **Per key topic** (joint states, RGB, depth, `camera_info`, wrench,
-   odom, command topics): `ros2 topic info -v` (type + QoS),
-   `ros2 topic hz` (real rate), `ros2 topic bw` (bandwidth);
-   `ros2 topic echo --once` on `camera_info` for resolution.
-4. **Camera transport decision:** look for `/compressed` siblings. Raw
-   720p RGB ≈ 80 MB/s (Wi-Fi drops frames silently); JPEG is a few
-   MB/s. No compressed topic → `image_transport` republisher, or record
-   on the helper laptop. The `bw` numbers decide where the recorder runs.
-5. **Identify command topics empirically:** teleop with the SpaceMouse
-   while watching `ros2 topic hz` on candidates — whatever the tablet
-   publishes is the action interface.
-6. **Clock check:** compare `header.stamp` against local clock; skew
-   > ~50 ms across machines → set up chrony before recording (camera ↔
-   joint sync is timestamp-based).
-7. **Command authority test** (hand on E-stop): near-zero joint
-   velocity from the laptop for 1–2 s (`ros2 topic pub -r 100 …`),
-   Ctrl+C to stop. Confirms an external machine can command the arm;
-   also verify the 100 Hz streaming behavior first-hand.
+1. **Env sanity** ✓ — plus the unplanned fixes that made discovery
+   work from WSL at all: mirrored networking, lab Wi-Fi marked
+   Private, and the decisive Hyper-V firewall rule (inbound UDP
+   7400–7500 into WSL); `~/.ros/cyclonedds-oarbot.xml` (interface pin
+   + unicast peers) wired into `.bashrc`.
+2. **Inventory dumps** ✓ — 49 topics, 25 nodes, 176 services,
+   8 actions (only Blue was powered).
+3. **Rates** ✓ — combined `/oarbot_blue/joint_states` (16 joints:
+   4 wheels + 6 arm + 6 fingers, standard `JointState`) at ~9.7 Hz;
+   Kinect 1920×1080 at ~14.6 fps internally, raw RGB arriving at only
+   ~3.4 Hz over Wi-Fi.
+4. **Camera transport** ✓ — no `/compressed` topics exist; Wi-Fi drops
+   ~75 % of raw frames → record on the helper laptop, as the Aug 25
+   data-pipeline decision anticipated.
+5. **Command topics** ✓ — identified in `tablet_gui` source and
+   confirmed by live capture (1,073 messages): arm = `PoseVelocity` on
+   `in/cartesian_velocity` at ~119 Hz while the deadman is held;
+   fingers = `PoseVelocityWithFingers` (closure %) event-based on
+   `in/cartesian_velocity_with_fingers`; base = `TwistStamped` on
+   `dingo/cmd_vel`. Quirk: Silver's x-y axes are flipped in the tablet
+   source. Reading these types required building `kinova_msgs` locally
+   (deactivate conda first — CMake prefers the `CONDA_PREFIX` Python).
+6. **Clock check** ✓ — laptop ≈ 1 s ahead of robot stamps. Harmless
+   for recording (helper laptop = single clock for camera + joints);
+   chrony required before live deployment.
+7. **Command authority** ✓ — 150 `PoseVelocity` messages at 100 Hz
+   (`twist_linear_z: 0.02`) sent from the laptop raised the arm ~3 cm;
+   motion stopped when publishing stopped. External control confirmed —
+   the exact channel a policy will use.
 
-Exit criteria for the session: topic dump saved, rates and bandwidths
-for the key topics noted, command topics identified, external command
-authority confirmed. Those numbers configure the recorder — next step
-in the [roadmap](roadmap-fall-2026.qmd) week plan.
+Next per the [roadmap](roadmap-fall-2026.qmd): the recording pipeline
+on the helper laptop (`ros2 bag record`, one bag per episode).

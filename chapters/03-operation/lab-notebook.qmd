@@ -1,0 +1,65 @@
+---
+title: "Lab notebook"
+---
+
+Session-by-session record of hands-on work with the robots, newest
+first — one dated entry per session, written so both an advisor and a
+non-engineer can follow it. The technical reference behind these
+entries is the [platform notes](platform-notes.qmd); formal weekly
+summaries live in the [weekly updates](../../updates/index.qmd).
+
+## 2026-08-27 — Day 1 with the robot
+
+### The goal
+
+Before a robot can learn anything, my laptop and the robot have to
+talk to each other. Today's job was to establish that conversation:
+hear everything the robot senses, and prove my laptop can tell the
+robot what to do — the two pipes that all the thesis work will flow
+through.
+
+### What happened
+
+**Getting connected took detective work.** The robot speaks over the
+lab's Wi-Fi, but my laptop runs its robot software inside a Linux
+compartment (WSL), and Windows was silently guarding that compartment's
+door: security rules dropped the robot's replies before they arrived.
+Everything *looked* configured correctly and nothing worked — until we
+found the right firewall gate to open. This is now fixed permanently;
+the laptop connects on its own from here on.
+
+**Then the robot came through loud and clear.** We catalogued
+everything it broadcasts — 49 data channels — and watched its joint
+angles stream live in a terminal while I drove the arm with the
+teleoperation tablet.
+
+**We caught the tablet's commands mid-flight.** While I teleoperated,
+my laptop recorded over a thousand of the exact command messages the
+tablet sends the arm. This matters because a learned policy will speak
+through this same channel — now we know its precise format: six speed
+values (move/turn in each direction) plus one gripper number. Seven
+numbers, a hundred times a second. That is the language the robot is
+commanded in.
+
+**And the finale: my laptop moved the arm.** A two-second command
+stream sent from my keyboard raised the arm three centimetres,
+smoothly, and it stopped by itself — with a hand on the emergency stop
+the whole time. External control: proven.
+
+### The numbers that shape what comes next
+
+| Measurement | Value | Consequence |
+|---|---|---|
+| Joint angle updates | ~10 per second | matches the planned learning rate |
+| Camera (on the robot) | 15 images/sec, full HD | healthy at the source |
+| Camera (over Wi-Fi) | only ~3.4 images/sec arrive | Wi-Fi can't carry raw video → **demonstrations must be recorded on the robot's own computer**, exactly as planned |
+| Tablet command rate | ~119 messages/sec | the arm wants 100/sec — confirmed feasible |
+| Clock difference laptop ↔ robot | ~1 second | harmless for recording (one clock does it all); must be synchronized before live deployment |
+
+### Bottom line
+
+Both pipes work: robot → laptop (all senses readable) and laptop →
+robot (commands obeyed). The day-1 checklist closed with every box
+ticked, and the next step is the recording pipeline: capturing human
+demonstrations on the robot's own computer in the format the learning
+software expects.
