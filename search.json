@@ -205,79 +205,101 @@
     ]
   },
   {
-    "objectID": "chapters/03-operation/platform-notes.html#day-1-checklist-first-lab-session-aug-27",
-    "href": "chapters/03-operation/platform-notes.html#day-1-checklist-first-lab-session-aug-27",
+    "objectID": "chapters/03-operation/platform-notes.html#day-1-checklist-completed-2026-08-27",
+    "href": "chapters/03-operation/platform-notes.html#day-1-checklist-completed-2026-08-27",
     "title": "7  OARbot platform notes — findings & day-1 checklist",
-    "section": "7.2 Day-1 checklist — first lab session (Aug 27)",
-    "text": "7.2 Day-1 checklist — first lab session (Aug 27)\nEverything read-only except step 7.\n\nEnv sanity on the laptop: Jazzy sourced, RMW_IMPLEMENTATION=rmw_cyclonedds_cpp, domain 0, on the lab Wi-Fi.\nInventory dumps to files (keep them): ros2 topic list, ros2 node list, ros2 service list, ros2 action list.\nPer key topic (joint states, RGB, depth, camera_info, wrench, odom, command topics): ros2 topic info -v (type + QoS), ros2 topic hz (real rate), ros2 topic bw (bandwidth); ros2 topic echo --once on camera_info for resolution.\nCamera transport decision: look for /compressed siblings. Raw 720p RGB ≈ 80 MB/s (Wi-Fi drops frames silently); JPEG is a few MB/s. No compressed topic → image_transport republisher, or record on the helper laptop. The bw numbers decide where the recorder runs.\nIdentify command topics empirically: teleop with the SpaceMouse while watching ros2 topic hz on candidates — whatever the tablet publishes is the action interface.\nClock check: compare header.stamp against local clock; skew &gt; ~50 ms across machines → set up chrony before recording (camera ↔︎ joint sync is timestamp-based).\nCommand authority test (hand on E-stop): near-zero joint velocity from the laptop for 1–2 s (ros2 topic pub -r 100 …), Ctrl+C to stop. Confirms an external machine can command the arm; also verify the 100 Hz streaming behavior first-hand.\n\nExit criteria for the session: topic dump saved, rates and bandwidths for the key topics noted, command topics identified, external command authority confirmed. Those numbers configure the recorder — next step in the roadmap week plan.",
+    "section": "7.2 Day-1 checklist — completed 2026-08-27",
+    "text": "7.2 Day-1 checklist — completed 2026-08-27\nAll exit criteria met. Plain-language account in the lab notebook; raw dumps and command captures in WSL ~/oarbot_recon_2026-08-27/.\n\nEnv sanity ✓ — plus the unplanned fixes that made discovery work from WSL at all: mirrored networking, lab Wi-Fi marked Private, and the decisive Hyper-V firewall rule (inbound UDP 7400–7500 into WSL); ~/.ros/cyclonedds-oarbot.xml (interface pin\n\nunicast peers) wired into .bashrc.\n\nInventory dumps ✓ — 49 topics, 25 nodes, 176 services, 8 actions (only Blue was powered).\nRates ✓ — combined /oarbot_blue/joint_states (16 joints: 4 wheels + 6 arm + 6 fingers, standard JointState) at ~9.7 Hz; Kinect 1920×1080 at ~14.6 fps internally, raw RGB arriving at only ~3.4 Hz over Wi-Fi.\nCamera transport ✓ — no /compressed topics exist; Wi-Fi drops ~75 % of raw frames → record on the helper laptop, as the Aug 25 data-pipeline decision anticipated.\nCommand topics ✓ — identified in tablet_gui source and confirmed by live capture (1,073 messages): arm = PoseVelocity on in/cartesian_velocity at ~119 Hz while the deadman is held; fingers = PoseVelocityWithFingers (closure %) event-based on in/cartesian_velocity_with_fingers; base = TwistStamped on dingo/cmd_vel. Quirk: Silver’s x-y axes are flipped in the tablet source. Reading these types required building kinova_msgs locally (deactivate conda first — CMake prefers the CONDA_PREFIX Python).\nClock check ✓ — laptop ≈ 1 s ahead of robot stamps. Harmless for recording (helper laptop = single clock for camera + joints); chrony required before live deployment.\nCommand authority ✓ — 150 PoseVelocity messages at 100 Hz (twist_linear_z: 0.02) sent from the laptop raised the arm ~3 cm; motion stopped when publishing stopped. External control confirmed — the exact channel a policy will use.\n\nNext per the roadmap: the recording pipeline on the helper laptop (ros2 bag record, one bag per episode).",
     "crumbs": [
       "Operations",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>OARbot platform notes — findings & day-1 checklist</span>"
     ]
   },
   {
-    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html",
-    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html",
-    "title": "8  SOP-01: Example procedure",
+    "objectID": "chapters/03-operation/lab-notebook.html",
+    "href": "chapters/03-operation/lab-notebook.html",
+    "title": "8  Lab notebook",
     "section": "",
-    "text": "8.1 Purpose",
+    "text": "8.1 2026-08-27 — Day 1 with the robot\nSession-by-session record of hands-on work with the robots, newest first — one dated entry per session, written so both an advisor and a non-engineer can follow it. The technical reference behind these entries is the platform notes; formal weekly summaries live in the weekly updates.",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Lab notebook</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/lab-notebook.html#day-1-with-the-robot",
+    "href": "chapters/03-operation/lab-notebook.html#day-1-with-the-robot",
+    "title": "8  Lab notebook",
+    "section": "",
+    "text": "8.1.1 The goal\nBefore a robot can learn anything, my laptop and the robot have to talk to each other. Today’s job was to establish that conversation: hear everything the robot senses, and prove my laptop can tell the robot what to do — the two pipes that all the thesis work will flow through.\n\n\n8.1.2 What happened\nGetting connected took detective work. The robot speaks over the lab’s Wi-Fi, but my laptop runs its robot software inside a Linux compartment (WSL), and Windows was silently guarding that compartment’s door: security rules dropped the robot’s replies before they arrived. Everything looked configured correctly and nothing worked — until we found the right firewall gate to open. This is now fixed permanently; the laptop connects on its own from here on.\nThen the robot came through loud and clear. We catalogued everything it broadcasts — 49 data channels — and watched its joint angles stream live in a terminal while I drove the arm with the teleoperation tablet.\nWe caught the tablet’s commands mid-flight. While I teleoperated, my laptop recorded over a thousand of the exact command messages the tablet sends the arm. This matters because a learned policy will speak through this same channel — now we know its precise format: six speed values (move/turn in each direction) plus one gripper number. Seven numbers, a hundred times a second. That is the language the robot is commanded in.\nAnd the finale: my laptop moved the arm. A two-second command stream sent from my keyboard raised the arm three centimetres, smoothly, and it stopped by itself — with a hand on the emergency stop the whole time. External control: proven.\n\n\n8.1.3 The numbers that shape what comes next\n\n\n\n\n\n\n\n\nMeasurement\nValue\nConsequence\n\n\n\n\nJoint angle updates\n~10 per second\nmatches the planned learning rate\n\n\nCamera (on the robot)\n15 images/sec, full HD\nhealthy at the source\n\n\nCamera (over Wi-Fi)\nonly ~3.4 images/sec arrive\nWi-Fi can’t carry raw video → demonstrations must be recorded on the robot’s own computer, exactly as planned\n\n\nTablet command rate\n~119 messages/sec\nthe arm wants 100/sec — confirmed feasible\n\n\nClock difference laptop ↔︎ robot\n~1 second\nharmless for recording (one clock does it all); must be synchronized before live deployment\n\n\n\n\n\n8.1.4 Bottom line\nBoth pipes work: robot → laptop (all senses readable) and laptop → robot (commands obeyed). The day-1 checklist closed with every box ticked, and the next step is the recording pipeline: capturing human demonstrations on the robot’s own computer in the format the learning software expects.",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Lab notebook</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html",
+    "href": "chapters/03-operation/sops/SOP-01-example-procedure.html",
+    "title": "9  SOP-01: Example procedure",
+    "section": "",
+    "text": "9.1 Purpose",
+    "crumbs": [
+      "Operations",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#purpose",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#purpose",
-    "title": "8  SOP-01: Example procedure",
+    "title": "9  SOP-01: Example procedure",
     "section": "",
     "text": "TODO: One sentence on what this procedure accomplishes and when it applies. (This SOP exists so the template renders a working example of the revision block + profiles + change history — replace it with your first real procedure.)",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#prerequisites",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#prerequisites",
-    "title": "8  SOP-01: Example procedure",
-    "section": "8.2 Prerequisites",
-    "text": "8.2 Prerequisites\n\nTODO",
+    "title": "9  SOP-01: Example procedure",
+    "section": "9.2 Prerequisites",
+    "text": "9.2 Prerequisites\n\nTODO",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#verification",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#verification",
-    "title": "8  SOP-01: Example procedure",
-    "section": "8.3 Verification",
-    "text": "8.3 Verification\n\nTODO",
+    "title": "9  SOP-01: Example procedure",
+    "section": "9.3 Verification",
+    "text": "9.3 Verification\n\nTODO",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/03-operation/sops/SOP-01-example-procedure.html#change-history",
     "href": "chapters/03-operation/sops/SOP-01-example-procedure.html#change-history",
-    "title": "8  SOP-01: Example procedure",
-    "section": "8.4 Change history",
-    "text": "8.4 Change history\nOwner: TODO Owner\n\n\n\n\n\n\n\n\nDate\nAuthor\nChange\n\n\n\n\n2026-06-12\nAmmarBarbee17\nInitial commit: Quarto thesis + project-management template",
+    "title": "9  SOP-01: Example procedure",
+    "section": "9.4 Change history",
+    "text": "9.4 Change history\nOwner: TODO Owner\n\n\n\n\n\n\n\n\nDate\nAuthor\nChange\n\n\n\n\n2026-06-12\nAmmarBarbee17\nInitial commit: Quarto thesis + project-management template",
     "crumbs": [
       "Operations",
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>SOP-01: Example procedure</span>"
     ]
   },
   {
     "objectID": "chapters/CH-04-future-work.html",
     "href": "chapters/CH-04-future-work.html",
-    "title": "9  Future work",
+    "title": "10  Future work",
     "section": "",
     "text": "TODO: What the thesis opens up but does not close. Future-shell epics in the initiatives/ tree are good source material here.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Future work</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Future work</span>"
     ]
   },
   {

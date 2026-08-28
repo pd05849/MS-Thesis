@@ -34,7 +34,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" rel="next">
+<link href="../../chapters/03-operation/lab-notebook.html" rel="next">
 <link href="../../chapters/03-operation/roadmap-fall-2026.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -186,8 +186,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../chapters/03-operation/lab-notebook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lab notebook</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span></a>
   </div>
 </li>
       </ul>
@@ -195,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../chapters/CH-04-future-work.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Future work</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Future work</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -251,7 +257,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#control-rate-design-why-the-policy-loop-is-10-hz" id="toc-control-rate-design-why-the-policy-loop-is-10-hz" class="nav-link" data-scroll-target="#control-rate-design-why-the-policy-loop-is-10-hz"><span class="header-section-number">7.1.4</span> Control-rate design (why the policy loop is ~10 Hz)</a></li>
   <li><a href="#pipeline-decisions-locked-in-so-far" id="toc-pipeline-decisions-locked-in-so-far" class="nav-link" data-scroll-target="#pipeline-decisions-locked-in-so-far"><span class="header-section-number">7.1.5</span> Pipeline decisions locked in so far</a></li>
   </ul></li>
-  <li><a href="#day-1-checklist-first-lab-session-aug-27" id="toc-day-1-checklist-first-lab-session-aug-27" class="nav-link" data-scroll-target="#day-1-checklist-first-lab-session-aug-27"><span class="header-section-number">7.2</span> Day-1 checklist — first lab session (Aug 27)</a></li>
+  <li><a href="#day-1-checklist-completed-2026-08-27" id="toc-day-1-checklist-completed-2026-08-27" class="nav-link" data-scroll-target="#day-1-checklist-completed-2026-08-27"><span class="header-section-number">7.2</span> Day-1 checklist — completed 2026-08-27</a></li>
   </ul>
 </nav>
     </div>
@@ -421,19 +427,22 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 </section>
-<section id="day-1-checklist-first-lab-session-aug-27" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="day-1-checklist-first-lab-session-aug-27"><span class="header-section-number">7.2</span> Day-1 checklist — first lab session (Aug 27)</h2>
-<p>Everything read-only except step 7.</p>
+<section id="day-1-checklist-completed-2026-08-27" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="day-1-checklist-completed-2026-08-27"><span class="header-section-number">7.2</span> Day-1 checklist — completed 2026-08-27</h2>
+<p>All exit criteria met. Plain-language account in the <a href="../../chapters/03-operation/lab-notebook.html">lab notebook</a>; raw dumps and command captures in WSL <code>~/oarbot_recon_2026-08-27/</code>.</p>
 <ol type="1">
-<li><strong>Env sanity</strong> on the laptop: Jazzy sourced, <code>RMW_IMPLEMENTATION=rmw_cyclonedds_cpp</code>, domain 0, on the lab Wi-Fi.</li>
-<li><strong>Inventory dumps</strong> to files (keep them): <code>ros2 topic list</code>, <code>ros2 node list</code>, <code>ros2 service list</code>, <code>ros2 action list</code>.</li>
-<li><strong>Per key topic</strong> (joint states, RGB, depth, <code>camera_info</code>, wrench, odom, command topics): <code>ros2 topic info -v</code> (type + QoS), <code>ros2 topic hz</code> (real rate), <code>ros2 topic bw</code> (bandwidth); <code>ros2 topic echo --once</code> on <code>camera_info</code> for resolution.</li>
-<li><strong>Camera transport decision:</strong> look for <code>/compressed</code> siblings. Raw 720p RGB ≈ 80 MB/s (Wi-Fi drops frames silently); JPEG is a few MB/s. No compressed topic → <code>image_transport</code> republisher, or record on the helper laptop. The <code>bw</code> numbers decide where the recorder runs.</li>
-<li><strong>Identify command topics empirically:</strong> teleop with the SpaceMouse while watching <code>ros2 topic hz</code> on candidates — whatever the tablet publishes is the action interface.</li>
-<li><strong>Clock check:</strong> compare <code>header.stamp</code> against local clock; skew &gt; ~50 ms across machines → set up chrony before recording (camera ↔︎ joint sync is timestamp-based).</li>
-<li><strong>Command authority test</strong> (hand on E-stop): near-zero joint velocity from the laptop for 1–2 s (<code>ros2 topic pub -r 100 …</code>), Ctrl+C to stop. Confirms an external machine can command the arm; also verify the 100 Hz streaming behavior first-hand.</li>
+<li><strong>Env sanity</strong> ✓ — plus the unplanned fixes that made discovery work from WSL at all: mirrored networking, lab Wi-Fi marked Private, and the decisive Hyper-V firewall rule (inbound UDP 7400–7500 into WSL); <code>~/.ros/cyclonedds-oarbot.xml</code> (interface pin
+<ul>
+<li>unicast peers) wired into <code>.bashrc</code>.</li>
+</ul></li>
+<li><strong>Inventory dumps</strong> ✓ — 49 topics, 25 nodes, 176 services, 8 actions (only Blue was powered).</li>
+<li><strong>Rates</strong> ✓ — combined <code>/oarbot_blue/joint_states</code> (16 joints: 4 wheels + 6 arm + 6 fingers, standard <code>JointState</code>) at ~9.7 Hz; Kinect 1920×1080 at ~14.6 fps internally, raw RGB arriving at only ~3.4 Hz over Wi-Fi.</li>
+<li><strong>Camera transport</strong> ✓ — no <code>/compressed</code> topics exist; Wi-Fi drops ~75 % of raw frames → record on the helper laptop, as the Aug 25 data-pipeline decision anticipated.</li>
+<li><strong>Command topics</strong> ✓ — identified in <code>tablet_gui</code> source and confirmed by live capture (1,073 messages): arm = <code>PoseVelocity</code> on <code>in/cartesian_velocity</code> at ~119 Hz while the deadman is held; fingers = <code>PoseVelocityWithFingers</code> (closure %) event-based on <code>in/cartesian_velocity_with_fingers</code>; base = <code>TwistStamped</code> on <code>dingo/cmd_vel</code>. Quirk: Silver’s x-y axes are flipped in the tablet source. Reading these types required building <code>kinova_msgs</code> locally (deactivate conda first — CMake prefers the <code>CONDA_PREFIX</code> Python).</li>
+<li><strong>Clock check</strong> ✓ — laptop ≈ 1 s ahead of robot stamps. Harmless for recording (helper laptop = single clock for camera + joints); chrony required before live deployment.</li>
+<li><strong>Command authority</strong> ✓ — 150 <code>PoseVelocity</code> messages at 100 Hz (<code>twist_linear_z: 0.02</code>) sent from the laptop raised the arm ~3 cm; motion stopped when publishing stopped. External control confirmed — the exact channel a policy will use.</li>
 </ol>
-<p>Exit criteria for the session: topic dump saved, rates and bandwidths for the key topics noted, command topics identified, external command authority confirmed. Those numbers configure the recorder — next step in the <a href="../../chapters/03-operation/roadmap-fall-2026.html">roadmap</a> week plan.</p>
+<p>Next per the <a href="../../chapters/03-operation/roadmap-fall-2026.html">roadmap</a>: the recording pipeline on the helper laptop (<code>ros2 bag record</code>, one bag per episode).</p>
 
 
 </section>
@@ -846,8 +855,8 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" class="pagination-link" aria-label="SOP-01: Example procedure">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/03-operation/lab-notebook.html" class="pagination-link" aria-label="Lab notebook">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lab notebook</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Operations – Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control</title>
+<title>8&nbsp; Lab notebook – Learning from Demonstration for Complex Tasks: Vision-Language-Action Models for OARbot Control</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,8 +33,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../chapters/03-operation/roadmap-fall-2026.html" rel="next">
-<link href="../../chapters/02-methods/index.html" rel="prev">
+<link href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" rel="next">
+<link href="../../chapters/03-operation/platform-notes.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Operations</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/lab-notebook.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lab notebook</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/03-operation/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../chapters/03-operation/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Operations</span></span></a>
   </div>
 </li>
@@ -185,7 +185,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/03-operation/lab-notebook.html" class="sidebar-item-text sidebar-link">
+  <a href="../../chapters/03-operation/lab-notebook.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lab notebook</span></span></a>
   </div>
 </li>
@@ -243,15 +243,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#day-1-with-the-robot" id="toc-day-1-with-the-robot" class="nav-link active" data-scroll-target="#day-1-with-the-robot"><span class="header-section-number">8.1</span> 2026-08-27 — Day 1 with the robot</a>
+  <ul class="collapse">
+  <li><a href="#the-goal" id="toc-the-goal" class="nav-link" data-scroll-target="#the-goal"><span class="header-section-number">8.1.1</span> The goal</a></li>
+  <li><a href="#what-happened" id="toc-what-happened" class="nav-link" data-scroll-target="#what-happened"><span class="header-section-number">8.1.2</span> What happened</a></li>
+  <li><a href="#the-numbers-that-shape-what-comes-next" id="toc-the-numbers-that-shape-what-comes-next" class="nav-link" data-scroll-target="#the-numbers-that-shape-what-comes-next"><span class="header-section-number">8.1.3</span> The numbers that shape what comes next</a></li>
+  <li><a href="#bottom-line" id="toc-bottom-line" class="nav-link" data-scroll-target="#bottom-line"><span class="header-section-number">8.1.4</span> Bottom line</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Operations</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../chapters/03-operation/index.html">Operations</a></li><li class="breadcrumb-item"><a href="../../chapters/03-operation/lab-notebook.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lab notebook</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Operations</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lab notebook</span></h1>
 </div>
 
 
@@ -268,11 +280,71 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<blockquote class="blockquote">
-<p>TODO: Part intro for operating procedures. SOPs live in <code>sops/</code> and render in three audience variants via Quarto profiles (<code>--profile sop-detailed | sop-checklist | sop-walkthrough</code>). Each SOP carries a formal revision block (rendered by the <code></code> shortcode) plus an auto-generated git change history.</p>
-</blockquote>
+<p>Session-by-session record of hands-on work with the robots, newest first — one dated entry per session, written so both an advisor and a non-engineer can follow it. The technical reference behind these entries is the <a href="../../chapters/03-operation/platform-notes.html">platform notes</a>; formal weekly summaries live in the <a href="../../updates/index.html">weekly updates</a>.</p>
+<section id="day-1-with-the-robot" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="day-1-with-the-robot"><span class="header-section-number">8.1</span> 2026-08-27 — Day 1 with the robot</h2>
+<section id="the-goal" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="the-goal"><span class="header-section-number">8.1.1</span> The goal</h3>
+<p>Before a robot can learn anything, my laptop and the robot have to talk to each other. Today’s job was to establish that conversation: hear everything the robot senses, and prove my laptop can tell the robot what to do — the two pipes that all the thesis work will flow through.</p>
+</section>
+<section id="what-happened" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="what-happened"><span class="header-section-number">8.1.2</span> What happened</h3>
+<p><strong>Getting connected took detective work.</strong> The robot speaks over the lab’s Wi-Fi, but my laptop runs its robot software inside a Linux compartment (WSL), and Windows was silently guarding that compartment’s door: security rules dropped the robot’s replies before they arrived. Everything <em>looked</em> configured correctly and nothing worked — until we found the right firewall gate to open. This is now fixed permanently; the laptop connects on its own from here on.</p>
+<p><strong>Then the robot came through loud and clear.</strong> We catalogued everything it broadcasts — 49 data channels — and watched its joint angles stream live in a terminal while I drove the arm with the teleoperation tablet.</p>
+<p><strong>We caught the tablet’s commands mid-flight.</strong> While I teleoperated, my laptop recorded over a thousand of the exact command messages the tablet sends the arm. This matters because a learned policy will speak through this same channel — now we know its precise format: six speed values (move/turn in each direction) plus one gripper number. Seven numbers, a hundred times a second. That is the language the robot is commanded in.</p>
+<p><strong>And the finale: my laptop moved the arm.</strong> A two-second command stream sent from my keyboard raised the arm three centimetres, smoothly, and it stopped by itself — with a hand on the emergency stop the whole time. External control: proven.</p>
+</section>
+<section id="the-numbers-that-shape-what-comes-next" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="the-numbers-that-shape-what-comes-next"><span class="header-section-number">8.1.3</span> The numbers that shape what comes next</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Measurement</th>
+<th>Value</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Joint angle updates</td>
+<td>~10 per second</td>
+<td>matches the planned learning rate</td>
+</tr>
+<tr class="even">
+<td>Camera (on the robot)</td>
+<td>15 images/sec, full HD</td>
+<td>healthy at the source</td>
+</tr>
+<tr class="odd">
+<td>Camera (over Wi-Fi)</td>
+<td>only ~3.4 images/sec arrive</td>
+<td>Wi-Fi can’t carry raw video → <strong>demonstrations must be recorded on the robot’s own computer</strong>, exactly as planned</td>
+</tr>
+<tr class="even">
+<td>Tablet command rate</td>
+<td>~119 messages/sec</td>
+<td>the arm wants 100/sec — confirmed feasible</td>
+</tr>
+<tr class="odd">
+<td>Clock difference laptop ↔︎ robot</td>
+<td>~1 second</td>
+<td>harmless for recording (one clock does it all); must be synchronized before live deployment</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="bottom-line" class="level3" data-number="8.1.4">
+<h3 data-number="8.1.4" class="anchored" data-anchor-id="bottom-line"><span class="header-section-number">8.1.4</span> Bottom line</h3>
+<p>Both pipes work: robot → laptop (all senses readable) and laptop → robot (commands obeyed). The day-1 checklist closed with every box ticked, and the next step is the recording pipeline: capturing human demonstrations on the robot’s own computer in the format the learning software expects.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -677,13 +749,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/02-methods/index.html" class="pagination-link" aria-label="Methods">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Methods</span></span>
+      <a href="../../chapters/03-operation/platform-notes.html" class="pagination-link" aria-label="OARbot platform notes — findings &amp; day-1 checklist">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">OARbot platform notes — findings &amp; day-1 checklist</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/03-operation/roadmap-fall-2026.html" class="pagination-link" aria-label="Fall 2026 Roadmap — experiments to December">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fall 2026 Roadmap — experiments to December</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../chapters/03-operation/sops/SOP-01-example-procedure.html" class="pagination-link" aria-label="SOP-01: Example procedure">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">SOP-01: Example procedure</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

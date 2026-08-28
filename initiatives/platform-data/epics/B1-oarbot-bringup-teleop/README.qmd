@@ -26,6 +26,13 @@ signal is recorded in sync — the precondition for
 
 ## Status log
 
+- **2026-08-27:** First lab session — day-1 checklist completed.
+  Laptop ↔ robot communication established (WSL firewall was the
+  blocker), full topic inventory saved, rates measured, teleop command
+  interface identified and captured live, and external command
+  authority proven (laptop moved the arm). Camera bandwidth
+  measurement confirms recording must happen on the helper laptop.
+  → [Lab notebook, day-1 entry](../../../../chapters/03-operation/lab-notebook.qmd)
 - **2026-08-26:** Platform documentation digested ahead of first lab
   session — ROS 2 comms architecture (CycloneDDS, domain bridge),
   kinova-ros2 interface incl. the exact-100 Hz command requirement, and
